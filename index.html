@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>المتفوق – رفيقك في هندسة الميكانيك</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ========== NAVBAR ========== -->
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <button class="hamburger" id="hamburger" aria-label="القائمة">
+      <span></span><span></span><span></span>
+    </button>
+    <a href="#" class="nav-logo">
+      <div class="logo-icon">⚡</div>
+      <span>المتفوق</span>
+    </a>
+  </div>
+  <div class="nav-links" id="navLinks">
+    <a href="#about">عن المنصة</a>
+    <a href="#subjects">المواد</a>
+    <a href="#why">لماذا نحن</a>
+    <a href="#testimonials">آراء الطلاب</a>
+    <a href="https://t.me/ENGENEERING7" target="_blank" class="nav-cta">قناة التلغرام</a>
+  </div>
+</nav>
+
+<!-- ========== HERO ========== -->
+<section class="hero" id="home">
+  <canvas id="particleCanvas"></canvas>
+  <div class="hero-glow glow-1"></div>
+  <div class="hero-glow glow-2"></div>
+  <div class="grid-overlay"></div>
+
+  <div class="hero-content">
+    <div class="hero-badge" data-aos="fade-down">
+      <span>⭐</span> منصة المتفوق – مخصصة لطلاب هندسة الميكانيك
+    </div>
+    <h1 class="hero-title" data-aos="fade-up" data-aos-delay="100">
+      <span class="text-white">تفوّق بلا حدود |</span><br />
+      <span class="text-gradient">رفيقك في هندسة</span><br />
+      <span class="text-white">الميكانيك</span>
+    </h1>
+    <p class="hero-subtitle" data-aos="fade-up" data-aos-delay="200">
+      منصة المتفوق – كل ما يحتاجه طالب هندسة الميكانيك من شروحات وملخصات ودورات احترافية.
+      القناة الرسمية على تلغرام هي الأساس – انضم الآن مجاناً
+    </p>
+    <div class="hero-actions" data-aos="fade-up" data-aos-delay="300">
+      <a href="https://t.me/ENGENEERING7" target="_blank" class="btn-primary">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg>
+        انضم لقناة التلغرام ←
+      </a>
+      <a href="#subjects" class="btn-secondary">تصفّح المواد</a>
+    </div>
+    <div class="hero-stats" data-aos="fade-up" data-aos-delay="400">
+      <span class="stat-dot"></span>
+      <span>@ENGENEERING7</span>
+      <span class="divider">·</span>
+      <span class="text-gold">+415 مشترك</span>
+    </div>
+  </div>
+</section>
+
+<!-- ========== NUMBERS ========== -->
+<section class="numbers-section" id="about">
+  <div class="container">
+    <div class="numbers-grid">
+      <div class="number-card" data-aos="zoom-in" data-aos-delay="0">
+        <span class="number-val" data-target="415">0</span><span class="text-gold">+</span>
+        <p>مشترك في القناة</p>
+      </div>
+      <div class="number-card" data-aos="zoom-in" data-aos-delay="100">
+        <span class="number-val" data-target="128">0</span><span class="text-gold">+</span>
+        <p>رأي إيجابي</p>
+      </div>
+      <div class="number-card" data-aos="zoom-in" data-aos-delay="200">
+        <span class="number-val" data-target="15">0</span>
+        <p>مادة هندسية</p>
+      </div>
+      <div class="number-card" data-aos="zoom-in" data-aos-delay="300">
+        <span class="number-val" data-target="17">0</span><span class="text-gold">+</span>
+        <p>دورة تعليمية</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== WHY US ========== -->
+<section class="why-section" id="why">
+  <div class="container">
+    <div class="section-badge" data-aos="fade-down">لماذا نحن</div>
+    <h2 class="section-title" data-aos="fade-up">
+      لماذا <span class="text-gradient">منصة المتفوق</span>؟
+    </h2>
+    <p class="section-sub" data-aos="fade-up" data-aos-delay="100">
+      نقدّم تجربة تعلّم متكاملة مبنية على الجودة والشغف.
+    </p>
+    <div class="features-grid">
+      <div class="feature-card" data-aos="fade-up" data-aos-delay="0">
+        <div class="feature-icon">👑</div>
+        <h3>محتوى حصري</h3>
+        <p>مناهج مُصممة بعناية لا تجدها في أي مكان آخر.</p>
+      </div>
+      <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+        <div class="feature-icon">🎓</div>
+        <h3>مدرسون متخصصون</h3>
+        <p>نخبة من أفضل المدرسين والخبراء في كل مجال.</p>
+      </div>
+      <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+        <div class="feature-icon">🏆</div>
+        <h3>شهادات معتمدة</h3>
+        <p>احصل على شهادات تعزز سيرتك الذاتية والمهنية.</p>
+      </div>
+      <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+        <div class="feature-icon">🎧</div>
+        <h3>دعم مستمر</h3>
+        <p>فريق دعم متاح على مدار الساعة للإجابة على أسئلتك.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SUBJECTS ========== -->
+<section class="subjects-section" id="subjects">
+  <div class="container">
+    <div class="section-badge" data-aos="fade-down">مواد هندسة الميكانيك</div>
+    <h2 class="section-title" data-aos="fade-up">
+      المواد <span class="text-gradient">المتوفرة لدينا</span>
+    </h2>
+    <p class="section-sub" data-aos="fade-up" data-aos-delay="100">
+      كل ما تحتاجه من شروحات وملخصات لمواد هندسة الميكانيك – على الموقع وعلى قناتنا الرسمية في تلغرام.
+    </p>
+    <div class="subjects-grid">
+      <div class="subject-card" data-aos="fade-up" data-aos-delay="0">
+        <div class="subject-num">01</div>
+        <div class="subject-icon">⚙️</div>
+        <h3>تصميم 1</h3>
+        <p>شروحات كاملة ومراجعات لمادة تصميم 1 لطلاب هندسة الميكانيك.</p>
+        <a href="https://t.me/ENGENEERING7" target="_blank" class="subject-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg>
+          ادخل على التلغرام
+        </a>
+      </div>
+      <div class="subject-card" data-aos="fade-up" data-aos-delay="80">
+        <div class="subject-num">02</div>
+        <div class="subject-icon">⚙️</div>
+        <h3>تصميم 2</h3>
+        <p>شروحات كاملة ومراجعات لمادة تصميم 2 لطلاب هندسة الميكانيك.</p>
+        <a href="https://t.me/ENGENEERING7" target="_blank" class="subject-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg>
+          ادخل على التلغرام
+        </a>
+      </div>
+      <div class="subject-card" data-aos="fade-up" data-aos-delay="160">
+        <div class="subject-num">03</div>
+        <div class="subject-icon">✏️</div>
+        <h3>وصفية</h3>
+        <p>شروحات كاملة ومراجعات لمادة وصفية لطلاب هندسة الميكانيك.</p>
+        <a href="https://t.me/ENGENEERING7" target="_blank" class="subject-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg>
+          ادخل على التلغرام
+        </a>
+      </div>
+      <div class="subject-card" data-aos="fade-up" data-aos-delay="240">
+        <div class="subject-num">04</div>
+        <div class="subject-icon">📄</div>
+        <h3>رياضيات 3</h3>
+        <p>شروحات كاملة ومراجعات لمادة رياضيات 3 لطلاب هندسة الميكانيك.</p>
+        <a href="https://t.me/ENGENEERING7" target="_blank" class="subject-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg>
+          ادخل على التلغرام
+        </a>
+      </div>
+      <div class="subject-card" data-aos="fade-up" data-aos-delay="320">
+        <div class="subject-num">05</div>
+        <div class="subject-icon">📄</div>
+        <h3>رياضيات 4</h3>
+        <p>شروحات كاملة ومراجعات لمادة رياضيات 4 لطلاب هندسة الميكانيك.</p>
+        <a href="https://t.me/ENGENEERING7" target="_blank" class="subject-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg>
+          ادخل على التلغرام
+        </a>
+      </div>
+      <div class="subject-card" data-aos="fade-up" data-aos-delay="400">
+        <div class="subject-num">06</div>
+        <div class="subject-icon">📄</div>
+        <h3>رياضيات 5</h3>
+        <p>شروحات كاملة ومراجعات لمادة رياضيات 5 لطلاب هندسة الميكانيك.</p>
+        <a href="https://t.me/ENGENEERING7" target="_blank" class="subject-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg>
+          ادخل على التلغرام
+        </a>
+      </div>
+      <div class="subject-card" data-aos="fade-up" data-aos-delay="480">
+        <div class="subject-num">07</div>
+        <div class="subject-icon">💻</div>
+        <h3>ماتلاب</h3>
+        <p>شروحات كاملة ومراجعات لمادة ماتلاب لطلاب هندسة الميكانيك.</p>
+        <a href="https://t.me/ENGENEERING7" target="_blank" class="subject-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg>
+          ادخل على التلغرام
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== TESTIMONIALS ========== -->
+<section class="testimonials-section" id="testimonials">
+  <div class="container">
+    <h2 class="section-title" data-aos="fade-up">
+      ماذا قال <span class="text-gradient">طلابنا</span>؟
+    </h2>
+    <div class="testimonials-slider" id="testimonialsSlider">
+      <div class="testimonial-card active">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">"تعلّمت من هنا بشكل منظم وأصبحت نتائجي أفضل بكثير. المحتوى عملي ومفيد جداً ويستحق كل ريال."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">م</div>
+          <div>
+            <strong>محمد الزهراني</strong>
+            <span>مهندس ميكانيك</span>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">"الشروحات واضحة ومنهجية، ساعدتني أفهم مواد كانت صعبة عليّ جداً. أنصح كل طالب بالانضمام."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">أ</div>
+          <div>
+            <strong>أحمد السالم</strong>
+            <span>طالب هندسة</span>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">"أفضل منصة عربية لهندسة الميكانيك. الملخصات دقيقة والدعم سريع جداً. شكراً فريق المتفوق."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">س</div>
+          <div>
+            <strong>سارة العمري</strong>
+            <span>طالبة هندسة</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slider-controls">
+      <button class="slider-btn" id="prevBtn">&#8250;</button>
+      <div class="slider-dots" id="sliderDots">
+        <span class="dot active"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+      <button class="slider-btn" id="nextBtn">&#8249;</button>
+    </div>
+  </div>
+</section>
+
+<!-- ========== TELEGRAM CTA ========== -->
+<section class="telegram-section">
+  <div class="container">
+    <div class="telegram-card" data-aos="zoom-in">
+      <div class="tg-icon">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg>
+      </div>
+      <h2>انضم لقناتنا على التلغرام</h2>
+      <p>القناة هي الأساس – أكثر من 415 طالب هندسة ميكانيك يستفيدون يومياً من شروحاتنا وملخصاتنا.</p>
+      <a href="https://t.me/ENGENEERING7" target="_blank" class="btn-primary btn-large">@ENGENEERING7</a>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="nav-logo">
+          <div class="logo-icon">⚡</div>
+          <span>المتفوق</span>
+        </a>
+        <p>منصة المتفوق – مخصصة لطلاب هندسة الميكانيك. شروحات وملخصات ومراجع كاملة. القناة الرسمية على تلغرام هي الأساس.</p>
+        <div class="social-links">
+          <a href="#" class="social-btn" aria-label="يوتيوب">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8zM9.7 15.5V8.5l6.3 3.5-6.3 3.5z"/></svg>
+          </a>
+          <a href="#" class="social-btn" aria-label="انستغرام">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 3.3.2 4.8 1.7 5 5 .1 1.3.1 1.6.1 4.9s0 3.6-.1 4.9c-.2 3.3-1.7 4.8-5 5-1.3.1-1.6.1-4.9.1s-3.6 0-4.9-.1c-3.3-.2-4.8-1.7-5-5C2 16.6 2 16.3 2 12s0-3.6.1-4.9c.2-3.3 1.7-4.8 5-5C8.4 2.2 8.8 2.2 12 2.2zm0-2.2C8.7 0 8.3 0 7 .1 2.7.3.3 2.7.1 7 0 8.3 0 8.7 0 12s0 3.7.1 5c.2 4.3 2.6 6.7 7 6.9 1.3.1 1.7.1 5 .1s3.7 0 5-.1c4.3-.2 6.8-2.6 7-6.9.1-1.3.1-1.7.1-5s0-3.7-.1-5C23.7 2.7 21.3.3 17 .1 15.7 0 15.3 0 12 0zm0 5.8a6.2 6.2 0 1 0 0 12.4A6.2 6.2 0 0 0 12 5.8zm0 10.2a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.4-11.8a1.4 1.4 0 1 0 0 2.8 1.4 1.4 0 0 0 0-2.8z"/></svg>
+          </a>
+          <a href="https://t.me/ENGENEERING7" target="_blank" class="social-btn" aria-label="تلغرام">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg>
+          </a>
+        </div>
+        <p class="tg-handle">تلغرام: <strong>@ENGENEERING7</strong></p>
+      </div>
+      <div class="footer-links">
+        <h4>روابط سريعة</h4>
+        <a href="#subjects">المواد</a>
+        <a href="#why">عن المنصة</a>
+        <a href="https://t.me/ENGENEERING7" target="_blank">قناة التلغرام</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 منصة المتفوق – جميع الحقوق محفوظة</p>
+    </div>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>
