@@ -368,7 +368,164 @@ img { max-width: 100%; }
   opacity: 0.8; margin-bottom: 12px;
   text-shadow: 0 0 15px rgba(245,166,35,0.3);
 }
-.subject-icon { font-size: 2rem; margin-bottom: 14px; }
+
+/* ===== SVG SUBJECT ICONS ===== */
+.subject-icon {
+  margin-bottom: 14px;
+  display: flex;
+  justify-content: flex-end;
+}
+.subj-svg {
+  width: 64px;
+  height: 64px;
+  filter: drop-shadow(0 0 8px rgba(245,166,35,0.4));
+  transition: filter 0.3s;
+}
+.subject-card:hover .subj-svg {
+  filter: drop-shadow(0 0 18px rgba(245,166,35,0.75));
+}
+
+/* تصميم 1 - ترس يدور */
+.gear-group {
+  transform-origin: 32px 32px;
+  animation: spinGear 6s linear infinite;
+}
+@keyframes spinGear {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* تصميم 2 - ترسان يدوران بعكس بعض */
+.gear-a {
+  transform-origin: 25px 25px;
+  animation: spinGear 5s linear infinite;
+}
+.gear-b {
+  transform-origin: 42.5px 40px;
+  animation: spinGear 5s linear infinite reverse;
+}
+
+/* وصفية - قلم يهتز + خطوط تظهر */
+.pencil-group {
+  animation: pencilBob 2.5s ease-in-out infinite;
+  transform-origin: 33px 46px;
+}
+@keyframes pencilBob {
+  0%,100% { transform: rotate(0deg); }
+  20% { transform: rotate(-8deg); }
+  40% { transform: rotate(5deg); }
+  60% { transform: rotate(-4deg); }
+  80% { transform: rotate(2deg); }
+}
+.draw-line {
+  stroke-dasharray: 14;
+  stroke-dashoffset: 14;
+  animation: drawIn 2.5s ease-in-out infinite;
+}
+.line1 { animation-delay: 0.2s; }
+.line2 { animation-delay: 0.5s; }
+.line3 { animation-delay: 0.8s; }
+@keyframes drawIn {
+  0%,15% { stroke-dashoffset: 14; opacity: 0; }
+  40%,80% { stroke-dashoffset: 0; opacity: 1; }
+  95%,100% { stroke-dashoffset: 0; opacity: 0; }
+}
+
+/* رياضيات - موجة سينوسية + نقطة تتحرك */
+.sine-wave {
+  stroke-dasharray: 90;
+  stroke-dashoffset: 90;
+  animation: drawSine 3s ease-in-out infinite;
+}
+@keyframes drawSine {
+  0% { stroke-dashoffset: 90; }
+  60% { stroke-dashoffset: 0; }
+  85% { stroke-dashoffset: 0; opacity: 1; }
+  100% { stroke-dashoffset: 0; opacity: 0.3; }
+}
+.wave-dot {
+  animation: moveDot 3s ease-in-out infinite;
+  offset-path: path('M8 32 C14 18, 20 18, 26 32 C32 46, 38 46, 44 32 C50 18, 56 18, 56 32');
+}
+@keyframes moveDot {
+  0% { cx: 8; cy: 32; opacity: 0; }
+  10% { opacity: 1; }
+  25% { cx: 20; cy: 18; }
+  50% { cx: 32; cy: 46; }
+  75% { cx: 44; cy: 18; }
+  100% { cx: 56; cy: 32; opacity: 1; }
+}
+
+/* رياضيات 4 - مصفوفة تومض */
+.cell {
+  animation: cellPulse 3s ease-in-out infinite;
+}
+.c1 { animation-delay: 0s; }
+.c2 { animation-delay: 0.3s; }
+.c3 { animation-delay: 0.6s; }
+.c4 { animation-delay: 0.9s; }
+.c5 { animation-delay: 1.2s; }
+.c6 { animation-delay: 1.5s; }
+@keyframes cellPulse {
+  0%,80%,100% { opacity: 1; }
+  40% { opacity: 0.3; }
+}
+
+/* رياضيات 5 - انتيغرال يتوهج */
+.integral-sign {
+  stroke-dasharray: 60;
+  stroke-dashoffset: 60;
+  animation: drawIntegral 2.5s ease-in-out infinite;
+}
+@keyframes drawIntegral {
+  0% { stroke-dashoffset: 60; }
+  60% { stroke-dashoffset: 0; }
+  85% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: 60; }
+}
+.integral-fill {
+  animation: fillPulse 2.5s ease-in-out infinite;
+}
+@keyframes fillPulse {
+  0%,100% { opacity: 0.3; }
+  50% { opacity: 0.8; }
+}
+.integral-dot {
+  animation: dotBounce 2.5s ease-in-out infinite;
+}
+@keyframes dotBounce {
+  0%,100% { transform: translateY(0); opacity: 1; }
+  50% { transform: translateY(-6px); opacity: 0.7; }
+}
+
+/* ماتلاب - كرسر يومض + أسطر كود تظهر */
+.cursor-blink {
+  animation: blink 1s step-end infinite;
+}
+@keyframes blink {
+  0%,100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+.code-line {
+  stroke-dasharray: 35;
+  stroke-dashoffset: 35;
+  animation: typeCode 3s ease-out infinite;
+}
+.cl1 { animation-delay: 0.3s; }
+.cl2 { animation-delay: 1.0s; }
+.cl3 { animation-delay: 1.8s; }
+@keyframes typeCode {
+  0%,5% { stroke-dashoffset: 35; opacity: 1; }
+  30%,90% { stroke-dashoffset: 0; opacity: 1; }
+  95%,100% { stroke-dashoffset: 0; opacity: 0.5; }
+}
+
+/* hover - كل الأيقونات تكبر */
+.subject-card:hover .subj-svg {
+  transform: scale(1.12);
+  transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+}
+
 .subject-card h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 10px; }
 .subject-card p { color: var(--text-muted); font-size: 0.9rem; line-height: 1.7; margin-bottom: 24px; }
 .subject-btn {
