@@ -2,7 +2,13 @@
 const canvas = document.getElementById('particleCanvas');
 const ctx = canvas.getContext('2d');
 let particles = [];
-const COLORS = ['rgba(245,166,35,', 'rgba(232,116,10,', 'rgba(255,204,68,'];
+const COLORS = [
+  'rgba(245,166,35,',
+  'rgba(255,204,44,',
+  'rgba(255,220,80,',
+  'rgba(232,116,10,',
+  'rgba(255,180,30,'
+];
 
 function resize() {
   canvas.width = canvas.offsetWidth;
@@ -13,18 +19,25 @@ resize();
 
 function initParticles() {
   particles = [];
-  const count = Math.floor((canvas.width * canvas.height) / 9000);
+  // زيادة كثافة الجزيئات بشكل كبير
+  const count = Math.floor((canvas.width * canvas.height) / 3500);
   for (let i = 0; i < count; i++) {
+    const size = Math.random();
     particles.push({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
-      r: Math.random() * 1.8 + 0.4,
+      // جزيئات أكبر حجماً
+      r: size < 0.6 ? Math.random() * 1.5 + 0.6
+        : size < 0.85 ? Math.random() * 2.5 + 1.5
+        : Math.random() * 4 + 2.5,
       color: COLORS[Math.floor(Math.random() * COLORS.length)],
-      alpha: Math.random() * 0.5 + 0.1,
-      vx: (Math.random() - 0.5) * 0.25,
-      vy: (Math.random() - 0.5) * 0.25,
+      alpha: Math.random() * 0.6 + 0.2,
+      vx: (Math.random() - 0.5) * 0.3,
+      vy: (Math.random() - 0.5) * 0.3,
       pulse: Math.random() * Math.PI * 2,
-      pulseSpeed: Math.random() * 0.015 + 0.005
+      pulseSpeed: Math.random() * 0.018 + 0.005,
+      // بعض الجزيئات تتوهج
+      glow: Math.random() > 0.7
     });
   }
 }
@@ -36,39 +49,50 @@ canvas.addEventListener('mousemove', e => {
   mouseX = e.clientX - r.left;
   mouseY = e.clientY - r.top;
 });
+canvas.addEventListener('mouseleave', () => { mouseX = -1000; mouseY = -1000; });
 
 function drawParticles() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   particles.forEach((p, i) => {
     p.pulse += p.pulseSpeed;
-    const a = p.alpha + Math.sin(p.pulse) * 0.15;
+    const a = p.alpha + Math.sin(p.pulse) * 0.2;
     const dx = p.x - mouseX, dy = p.y - mouseY;
     const dist = Math.sqrt(dx * dx + dy * dy);
-    const repel = dist < 120 ? (120 - dist) / 120 : 0;
-    p.x += p.vx + (repel * dx / dist) * 0.6;
-    p.y += p.vy + (repel * dy / dist) * 0.6;
+    const repel = dist < 140 ? (140 - dist) / 140 : 0;
+    p.x += p.vx + (repel * dx / (dist || 1)) * 0.8;
+    p.y += p.vy + (repel * dy / (dist || 1)) * 0.8;
     if (p.x < 0) p.x = canvas.width;
     if (p.x > canvas.width) p.x = 0;
     if (p.y < 0) p.y = canvas.height;
     if (p.y > canvas.height) p.y = 0;
-    // draw lines to nearby
+
+    // خطوط الاتصال بين الجزيئات القريبة
     for (let j = i + 1; j < particles.length; j++) {
       const q = particles[j];
       const ldx = p.x - q.x, ldy = p.y - q.y;
       const ld = Math.sqrt(ldx * ldx + ldy * ldy);
-      if (ld < 90) {
+      if (ld < 100) {
         ctx.beginPath();
-        ctx.strokeStyle = `rgba(245,166,35,${0.06 * (1 - ld / 90)})`;
-        ctx.lineWidth = 0.5;
+        ctx.strokeStyle = `rgba(245,166,35,${0.1 * (1 - ld / 100)})`;
+        ctx.lineWidth = 0.6;
         ctx.moveTo(p.x, p.y);
         ctx.lineTo(q.x, q.y);
         ctx.stroke();
       }
     }
+
+    // رسم الجزيئة مع توهج للكبيرة منها
+    if (p.glow && p.r > 2) {
+      ctx.shadowBlur = 12;
+      ctx.shadowColor = p.color + '0.8)';
+    } else {
+      ctx.shadowBlur = 0;
+    }
     ctx.beginPath();
     ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
     ctx.fillStyle = p.color + Math.max(0, Math.min(1, a)) + ')';
     ctx.fill();
+    ctx.shadowBlur = 0;
   });
   requestAnimationFrame(drawParticles);
 }
@@ -115,7 +139,7 @@ const counterObserver = new IntersectionObserver(entries => {
 const numSection = document.querySelector('.numbers-section');
 if (numSection) counterObserver.observe(numSection);
 
-/* ===== AOS – scroll reveal ===== */
+/* ===== AOS scroll reveal ===== */
 const aosEls = document.querySelectorAll('[data-aos]');
 const aosObserver = new IntersectionObserver(entries => {
   entries.forEach(e => {
