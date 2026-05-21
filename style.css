@@ -338,11 +338,14 @@ img { max-width: 100%; }
   text-align: center;
   background: linear-gradient(180deg, #120f00 0%, #0c0a00 100%);
 }
+
+/* Desktop: 3 columns */
 .subjects-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 24px;
 }
+
 .subject-card {
   padding: 36px 28px;
   background: rgba(245,166,35,0.05);
@@ -672,6 +675,60 @@ img { max-width: 100%; }
   .nav-links.open { display: flex; }
   .hamburger { display: flex; }
 }
+
+/* ===== MOBILE: 3-column subjects (same as desktop) ===== */
+@media (max-width: 768px) {
+  .subjects-section {
+    padding: 60px 0;
+  }
+  .subjects-section .container {
+    padding: 0 10px;
+  }
+  .subjects-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  /* Compact card for mobile */
+  .subject-card {
+    padding: 14px 10px;
+    border-radius: 14px;
+  }
+  .subject-num {
+    font-size: 1.1rem;
+    margin-bottom: 6px;
+  }
+  .subject-icon {
+    margin-bottom: 8px;
+    justify-content: center;
+  }
+  .subj-svg {
+    width: 42px;
+    height: 42px;
+  }
+  .subject-card h3 {
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+    text-align: center;
+  }
+  .subject-card p {
+    display: none;
+  }
+  .subject-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 8px 6px;
+    font-size: 0.7rem;
+    border-radius: 8px;
+    gap: 4px;
+  }
+  .subject-btn svg {
+    width: 12px;
+    height: 12px;
+    flex-shrink: 0;
+  }
+}
+
 @media (max-width: 600px) {
   .numbers-grid { grid-template-columns: repeat(2, 1fr); }
   .hero-title { font-size: 2rem; }
