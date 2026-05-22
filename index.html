@@ -183,10 +183,35 @@
     <p class="section-sub" data-aos="fade-up" data-aos-delay="100">
       كل ما تحتاجه من شروحات وملخصات لمواد هندسة الميكانيك – على الموقع وعلى قناتنا الرسمية في تلغرام.
     </p>
+
+    <!-- ========== SEARCH BAR ========== -->
+    <div class="search-wrapper" data-aos="fade-up" data-aos-delay="150">
+      <div class="search-input-wrap">
+        <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="7"/>
+          <line x1="16.5" y1="16.5" x2="22" y2="22"/>
+        </svg>
+        <input
+          type="search"
+          id="subjectSearch"
+          placeholder="ابحث عن مادة... (مثال: رياضيات، تصميم، ماتلاب)"
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <button class="search-clear" id="searchClear" aria-label="مسح البحث" title="مسح">×</button>
+      </div>
+    </div>
+
     <div class="subjects-grid">
+      <!-- رسالة لا توجد نتائج -->
+      <div class="no-results" id="noResults">
+        <div class="no-results-icon">🔍</div>
+        <p>لم نجد أي مادة بهذا الاسم</p>
+        <p class="no-results-hint">جرّب كلمة أخرى مثل «رياضيات» أو «تصميم»</p>
+      </div>
 
       <!-- 01 -->
-      <div class="subject-card" data-aos="fade-up" data-aos-delay="0">
+      <div class="subject-card" data-aos="fade-up" data-aos-delay="0" data-keywords="تصميم design مكانيك">
         <div class="subject-num">01</div>
         <div class="subject-icon">
           <svg class="subj-svg gear-svg" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -207,7 +232,7 @@
       </div>
 
       <!-- 02 -->
-      <div class="subject-card" data-aos="fade-up" data-aos-delay="80">
+      <div class="subject-card" data-aos="fade-up" data-aos-delay="80" data-keywords="تصميم design مكانيك">
         <div class="subject-num">02</div>
         <div class="subject-icon">
           <svg class="subj-svg gears2-svg" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -224,7 +249,7 @@
       </div>
 
       <!-- 03 -->
-      <div class="subject-card" data-aos="fade-up" data-aos-delay="160">
+      <div class="subject-card" data-aos="fade-up" data-aos-delay="160" data-keywords="وصفية رسم descriptive">
         <div class="subject-num">03</div>
         <div class="subject-icon">
           <svg class="subj-svg pencil-svg" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -248,7 +273,7 @@
       </div>
 
       <!-- 04 -->
-      <div class="subject-card" data-aos="fade-up" data-aos-delay="240">
+      <div class="subject-card" data-aos="fade-up" data-aos-delay="240" data-keywords="رياضيات math تفاضل تكامل">
         <div class="subject-num">04</div>
         <div class="subject-icon">
           <svg class="subj-svg math-svg" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -270,7 +295,7 @@
       </div>
 
       <!-- 05 -->
-      <div class="subject-card" data-aos="fade-up" data-aos-delay="320">
+      <div class="subject-card" data-aos="fade-up" data-aos-delay="320" data-keywords="رياضيات math مصفوفات algebra">
         <div class="subject-num">05</div>
         <div class="subject-icon">
           <svg class="subj-svg matrix-svg" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -299,7 +324,7 @@
       </div>
 
       <!-- 06 -->
-      <div class="subject-card" data-aos="fade-up" data-aos-delay="400">
+      <div class="subject-card" data-aos="fade-up" data-aos-delay="400" data-keywords="رياضيات math تكامل integral">
         <div class="subject-num">06</div>
         <div class="subject-icon">
           <svg class="subj-svg integral-svg" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -320,7 +345,7 @@
       </div>
 
       <!-- 07 -->
-      <div class="subject-card" data-aos="fade-up" data-aos-delay="480">
+      <div class="subject-card" data-aos="fade-up" data-aos-delay="480" data-keywords="ماتلاب matlab برمجة programming">
         <div class="subject-num">07</div>
         <div class="subject-icon">
           <svg class="subj-svg matlab-svg" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -348,7 +373,7 @@
       </div>
 
       <!-- 08 -->
-      <div class="subject-card" data-aos="fade-up" data-aos-delay="560">
+      <div class="subject-card" data-aos="fade-up" data-aos-delay="560" data-keywords="رسم صناعي drawing industrial">
         <div class="subject-num">08</div>
         <div class="subject-icon">
           <svg class="subj-svg drafting-svg" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -375,7 +400,7 @@
       </div>
 
       <!-- 09 -->
-      <div class="subject-card" data-aos="fade-up" data-aos-delay="640">
+      <div class="subject-card" data-aos="fade-up" data-aos-delay="640" data-keywords="رسم هندسي geometric drawing">
         <div class="subject-num">09</div>
         <div class="subject-icon">
           <svg class="subj-svg compass-svg" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -397,7 +422,7 @@
       </div>
 
       <!-- 10 -->
-      <div class="subject-card" data-aos="fade-up" data-aos-delay="720">
+      <div class="subject-card" data-aos="fade-up" data-aos-delay="720" data-keywords="solidworks سوليدوركس تصميم ثلاثي ابعاد 3d">
         <div class="subject-num">10</div>
         <div class="subject-icon">
           <svg class="subj-svg solid-svg" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -418,7 +443,7 @@
       </div>
 
       <!-- 11 -->
-      <div class="subject-card" data-aos="fade-up" data-aos-delay="800">
+      <div class="subject-card" data-aos="fade-up" data-aos-delay="800" data-keywords="powermill cnc تصنيع مسارات">
         <div class="subject-num">11</div>
         <div class="subject-icon">
           <svg class="subj-svg cnc-svg" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -439,7 +464,7 @@
       </div>
 
       <!-- 12 -->
-      <div class="subject-card" data-aos="fade-up" data-aos-delay="880">
+      <div class="subject-card" data-aos="fade-up" data-aos-delay="880" data-keywords="تشكيل معادن metal forming">
         <div class="subject-num">12</div>
         <div class="subject-icon">
           <svg class="subj-svg metal-svg" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -459,7 +484,7 @@
       </div>
 
       <!-- 13 -->
-      <div class="subject-card" data-aos="fade-up" data-aos-delay="960">
+      <div class="subject-card" data-aos="fade-up" data-aos-delay="960" data-keywords="ستاتيك statics قوى توازن">
         <div class="subject-num">13</div>
         <div class="subject-icon">
           <svg class="subj-svg static-svg" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -483,7 +508,7 @@
       </div>
 
       <!-- 14 -->
-      <div class="subject-card" data-aos="fade-up" data-aos-delay="1040">
+      <div class="subject-card" data-aos="fade-up" data-aos-delay="1040" data-keywords="موائع fluid mechanics سوائل">
         <div class="subject-num">14</div>
         <div class="subject-icon">
           <svg class="subj-svg fluid-svg" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -505,7 +530,7 @@
       </div>
 
       <!-- 15 -->
-      <div class="subject-card" data-aos="fade-up" data-aos-delay="1120">
+      <div class="subject-card" data-aos="fade-up" data-aos-delay="1120" data-keywords="بوربوينت powerpoint عروض تقديمية">
         <div class="subject-num">15</div>
         <div class="subject-icon">
           <svg class="subj-svg ppt-svg" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
