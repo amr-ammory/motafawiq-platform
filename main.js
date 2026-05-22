@@ -180,7 +180,7 @@ fetchSubscriberCount();
 setInterval(fetchSubscriberCount, 10 * 60 * 1000);
 
 /* =================================================================
-   TELEGRAM DEEP LINK — يفتح تطبيق تلغرام مباشرة على الموبايل
+   SUBJECT CARD — كل المربع ياخد عالتلغرام
    ================================================================= */
 (function () {
   const TG_USERNAME = 'ENGENEERING7';
@@ -188,19 +188,37 @@ setInterval(fetchSubscriberCount, 10 * 60 * 1000);
   const TG_DEEP     = 'tg://resolve?domain=' + TG_USERNAME;
   const isMobile    = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
-  document.querySelectorAll('.subject-btn').forEach(function (btn) {
-    btn.addEventListener('click', function (e) {
-      e.preventDefault();
+  function openTelegram(e) {
+    // تجاهل إذا كانت حركة scroll وليس tap حقيقي
+    if (e.type === 'touchend') {
+      const touch = e.changedTouches[0];
+      if (!touch) return;
+    }
+    e.preventDefault();
 
-      if (isMobile) {
-        // حاول فتح التطبيق مباشرة
-        window.location.href = TG_DEEP;
-        // fallback بعد 1.5 ثانية إذا التطبيق ما انفتح
-        setTimeout(function () {
-          window.open(TG_HTTPS, '_blank');
-        }, 1500);
-      } else {
+    if (isMobile) {
+      window.location.href = TG_DEEP;
+      setTimeout(function () {
         window.open(TG_HTTPS, '_blank');
+      }, 1500);
+    } else {
+      window.open(TG_HTTPS, '_blank');
+    }
+  }
+
+  document.querySelectorAll('.subject-card').forEach(function (card) {
+    // كامل المربع يشتغل كرابط
+    card.setAttribute('role', 'link');
+    card.setAttribute('tabindex', '0');
+    card.setAttribute('aria-label', (card.querySelector('h3')?.textContent || 'المادة') + ' — فتح قناة التلغرام');
+
+    card.addEventListener('click', openTelegram);
+
+    // دعم لوحة المفاتيح
+    card.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openTelegram(e);
       }
     });
   });

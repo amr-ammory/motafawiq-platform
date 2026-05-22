@@ -408,21 +408,42 @@ mark.search-highlight {
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
 }
+
+/* ===== SUBJECT CARD — كامل قابل للنقر ===== */
 .subject-card {
   padding: 36px 28px;
   background: rgba(245,166,35,0.05);
   border: 1px solid rgba(245,166,35,0.2);
   border-radius: var(--radius);
-  text-align: right; transition: all 0.3s;
-  position: relative; overflow: hidden;
+  text-align: right;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  display: block;
+  /* تحويل المربع كاملاً إلى رابط */
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 .subject-card::after {
-  content: ''; position: absolute; inset: 0;
+  content: '';
+  position: absolute; inset: 0;
   background: linear-gradient(135deg, rgba(245,166,35,0.09) 0%, transparent 60%);
-  opacity: 0; transition: opacity 0.3s;
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
 }
-.subject-card:hover { transform: translateY(-6px); border-color: rgba(245,166,35,0.6); box-shadow: 0 15px 45px rgba(245,166,35,0.15); }
-.subject-card:hover::after { opacity: 1; }
+.subject-card:hover,
+.subject-card:focus {
+  transform: translateY(-6px);
+  border-color: rgba(245,166,35,0.6);
+  box-shadow: 0 15px 45px rgba(245,166,35,0.15);
+  outline: none;
+}
+.subject-card:hover::after,
+.subject-card:focus::after { opacity: 1; }
+.subject-card:active { transform: translateY(-2px) scale(0.98); }
+
 .subject-num {
   font-size: 2.2rem; font-weight: 900; color: var(--gold);
   opacity: 0.8; margin-bottom: 12px;
@@ -436,7 +457,8 @@ mark.search-highlight {
   filter: drop-shadow(0 0 8px rgba(245,166,35,0.4));
   transition: filter 0.3s;
 }
-.subject-card:hover .subj-svg {
+.subject-card:hover .subj-svg,
+.subject-card:focus .subj-svg {
   filter: drop-shadow(0 0 18px rgba(245,166,35,0.75));
   transform: scale(1.12);
   transition: filter 0.3s, transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
@@ -548,16 +570,15 @@ mark.search-highlight {
   border-radius: 12px;
   transition: all 0.25s;
   box-shadow: 0 4px 18px rgba(245,166,35,0.4);
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
-  user-select: none;
-  -webkit-user-select: none;
+  pointer-events: none; /* الكارد كلها تشتغل — مو بس الزر */
   position: relative;
-  z-index: 2;
+  z-index: 1;
 }
-.subject-btn:hover { transform: scale(1.04); box-shadow: 0 8px 30px rgba(245,166,35,0.6); }
-.subject-btn:active { transform: scale(0.97); opacity: 0.85; }
+.subject-card:hover .subject-btn,
+.subject-card:focus .subject-btn {
+  transform: scale(1.04);
+  box-shadow: 0 8px 30px rgba(245,166,35,0.6);
+}
 
 /* ===== TESTIMONIALS ===== */
 .testimonials-section { padding: 100px 0; text-align: center; background: #0c0a00; }
