@@ -19,14 +19,12 @@ resize();
 
 function initParticles() {
   particles = [];
-  // زيادة كثافة الجزيئات بشكل كبير
   const count = Math.floor((canvas.width * canvas.height) / 3500);
   for (let i = 0; i < count; i++) {
     const size = Math.random();
     particles.push({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
-      // جزيئات أكبر حجماً
       r: size < 0.6 ? Math.random() * 1.5 + 0.6
         : size < 0.85 ? Math.random() * 2.5 + 1.5
         : Math.random() * 4 + 2.5,
@@ -36,7 +34,6 @@ function initParticles() {
       vy: (Math.random() - 0.5) * 0.3,
       pulse: Math.random() * Math.PI * 2,
       pulseSpeed: Math.random() * 0.018 + 0.005,
-      // بعض الجزيئات تتوهج
       glow: Math.random() > 0.7
     });
   }
@@ -66,7 +63,6 @@ function drawParticles() {
     if (p.y < 0) p.y = canvas.height;
     if (p.y > canvas.height) p.y = 0;
 
-    // خطوط الاتصال بين الجزيئات القريبة
     for (let j = i + 1; j < particles.length; j++) {
       const q = particles[j];
       const ldx = p.x - q.x, ldy = p.y - q.y;
@@ -81,7 +77,6 @@ function drawParticles() {
       }
     }
 
-    // رسم الجزيئة مع توهج للكبيرة منها
     if (p.glow && p.r > 2) {
       ctx.shadowBlur = 12;
       ctx.shadowColor = p.color + '0.8)';
@@ -115,29 +110,87 @@ document.querySelectorAll('.nav-links a').forEach(a => {
 });
 
 /* ===== COUNTER ANIMATION ===== */
-function animateCounter(el) {
-  const target = parseInt(el.dataset.target);
-  const duration = 2000;
-  const start = performance.now();
+function animateCounter(el, targetVal) {
+  const target   = targetVal !== undefined ? targetVal : parseInt(el.dataset.target);
+  const current  = parseInt(el.textContent) || 0;
+  const duration = 1800;
+  const start    = performance.now();
+
   function update(now) {
-    const elapsed = now - start;
+    const elapsed  = now - start;
     const progress = Math.min(elapsed / duration, 1);
-    const ease = 1 - Math.pow(1 - progress, 3);
-    el.textContent = Math.round(ease * target);
+    const ease     = 1 - Math.pow(1 - progress, 3);
+    el.textContent = Math.round(current + (target - current) * ease);
     if (progress < 1) requestAnimationFrame(update);
   }
   requestAnimationFrame(update);
 }
+
 const counterObserver = new IntersectionObserver(entries => {
   entries.forEach(e => {
     if (e.isIntersecting) {
-      e.target.querySelectorAll('.number-val').forEach(animateCounter);
+      e.target.querySelectorAll('.number-val').forEach(el => animateCounter(el));
       counterObserver.unobserve(e.target);
     }
   });
 }, { threshold: 0.4 });
 const numSection = document.querySelector('.numbers-section');
 if (numSection) counterObserver.observe(numSection);
+
+/* =================================================================
+   TELEGRAM SUBSCRIBER COUNT — Live from Cloudflare Worker
+   ================================================================= */
+
+// ← غيّر هاد الرابط بعد ما تنشر الـ Worker
+const WORKER_URL = 'https://motafawiq-tg-proxy.YOUR-SUBDOMAIN.workers.dev';
+
+// العناصر اللي يلزم تحديثها
+const subCounterEl  = document.querySelector('.number-val[data-target="415"]');  // كارد الأرقام
+const heroStatEl    = document.querySelector('.hero-stats .text-gold');           // Hero badge
+
+/**
+ * يجيب العدد من الـ Worker ويحدّث الـ UI
+ */
+async function fetchSubscriberCount() {
+  try {
+    const res  = await fetch(WORKER_URL, { cache: 'no-store' });
+    if (!res.ok) throw new Error('Worker HTTP ' + res.status);
+    const data = await res.json();
+    const count = data.count;
+
+    if (!count || count === 0) return; // لا تحدّث لو رجع صفر (خطأ)
+
+    // 1) حدّث الـ data-target عشان الأنيميشن يشتغل صح
+    if (subCounterEl) {
+      subCounterEl.dataset.target = count;
+      // لو الـ section مرئي حاليًا → شغّل الأنيميشن فوراً
+      animateCounter(subCounterEl, count);
+    }
+
+    // 2) حدّث نص الـ Hero stat  (مثال: +427 مشترك)
+    if (heroStatEl) {
+      heroStatEl.textContent = `+${count.toLocaleString('ar-EG')} مشترك`;
+    }
+
+    // 3) حدّث نص الـ Telegram CTA section
+    const ctaText = document.querySelector('.telegram-card p');
+    if (ctaText) {
+      ctaText.textContent = `القناة هي الأساس – أكثر من ${count.toLocaleString('ar-EG')} طالب هندسة ميكانيك يستفيدون يومياً من شروحاتنا وملخصاتنا.`;
+    }
+
+    console.log(`[Motafawiq] Subscriber count updated: ${count} (cached: ${data.cached})`);
+
+  } catch (err) {
+    // فشل الجلب → ابقَ على الرقم الثابت بالـ HTML
+    console.warn('[Motafawiq] Could not fetch subscriber count:', err.message);
+  }
+}
+
+// جلب فوري عند تحميل الصفحة
+fetchSubscriberCount();
+
+// تحديث تلقائي كل 10 دقائق (مزامنة مع كاش الـ Worker)
+setInterval(fetchSubscriberCount, 10 * 60 * 1000);
 
 /* ===== AOS scroll reveal ===== */
 const aosEls = document.querySelectorAll('[data-aos]');
@@ -154,7 +207,7 @@ aosEls.forEach(el => aosObserver.observe(el));
 
 /* ===== TESTIMONIAL SLIDER ===== */
 const cards = document.querySelectorAll('.testimonial-card');
-const dots = document.querySelectorAll('.dot');
+const dots  = document.querySelectorAll('.dot');
 let current = 0;
 function goTo(n) {
   cards[current].classList.remove('active');
