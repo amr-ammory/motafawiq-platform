@@ -141,16 +141,11 @@ if (numSection) counterObserver.observe(numSection);
    TELEGRAM SUBSCRIBER COUNT — Live from Cloudflare Worker
    ================================================================= */
 
-// ← غيّر هاد الرابط بعد ما تنشر الـ Worker
-const WORKER_URL = 'https://motafawiq-tg-proxy.YOUR-SUBDOMAIN.workers.dev';
+const WORKER_URL = 'https://motafawiq-tg-proxy.motafawiq.workers.dev';
 
-// العناصر اللي يلزم تحديثها
-const subCounterEl  = document.querySelector('.number-val[data-target="415"]');  // كارد الأرقام
-const heroStatEl    = document.querySelector('.hero-stats .text-gold');           // Hero badge
+const subCounterEl  = document.querySelector('.number-val[data-target="415"]');
+const heroStatEl    = document.querySelector('.hero-stats .text-gold');
 
-/**
- * يجيب العدد من الـ Worker ويحدّث الـ UI
- */
 async function fetchSubscriberCount() {
   try {
     const res  = await fetch(WORKER_URL, { cache: 'no-store' });
@@ -158,21 +153,17 @@ async function fetchSubscriberCount() {
     const data = await res.json();
     const count = data.count;
 
-    if (!count || count === 0) return; // لا تحدّث لو رجع صفر (خطأ)
+    if (!count || count === 0) return;
 
-    // 1) حدّث الـ data-target عشان الأنيميشن يشتغل صح
     if (subCounterEl) {
       subCounterEl.dataset.target = count;
-      // لو الـ section مرئي حاليًا → شغّل الأنيميشن فوراً
       animateCounter(subCounterEl, count);
     }
 
-    // 2) حدّث نص الـ Hero stat  (مثال: +427 مشترك)
     if (heroStatEl) {
       heroStatEl.textContent = `+${count.toLocaleString('ar-EG')} مشترك`;
     }
 
-    // 3) حدّث نص الـ Telegram CTA section
     const ctaText = document.querySelector('.telegram-card p');
     if (ctaText) {
       ctaText.textContent = `القناة هي الأساس – أكثر من ${count.toLocaleString('ar-EG')} طالب هندسة ميكانيك يستفيدون يومياً من شروحاتنا وملخصاتنا.`;
@@ -181,15 +172,11 @@ async function fetchSubscriberCount() {
     console.log(`[Motafawiq] Subscriber count updated: ${count} (cached: ${data.cached})`);
 
   } catch (err) {
-    // فشل الجلب → ابقَ على الرقم الثابت بالـ HTML
     console.warn('[Motafawiq] Could not fetch subscriber count:', err.message);
   }
 }
 
-// جلب فوري عند تحميل الصفحة
 fetchSubscriberCount();
-
-// تحديث تلقائي كل 10 دقائق (مزامنة مع كاش الـ Worker)
 setInterval(fetchSubscriberCount, 10 * 60 * 1000);
 
 /* ===== AOS scroll reveal ===== */
