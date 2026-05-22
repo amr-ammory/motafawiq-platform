@@ -207,3 +207,74 @@ document.getElementById('nextBtn').addEventListener('click', () => goTo(current 
 document.getElementById('prevBtn').addEventListener('click', () => goTo(current + 1));
 dots.forEach((d, i) => d.addEventListener('click', () => goTo(i)));
 setInterval(() => goTo(current + 1), 5000);
+
+/* ================================================================
+   LIVE SUBJECT SEARCH
+   ================================================================ */
+(function () {
+  const searchInput = document.getElementById('subjectSearch');
+  const clearBtn    = document.getElementById('searchClear');
+  const grid        = document.querySelector('.subjects-grid');
+  const noResults   = document.getElementById('noResults');
+  if (!searchInput || !grid) return;
+
+  // Store original text of each card for highlight restore
+  const subjectCards = Array.from(grid.querySelectorAll('.subject-card'));
+  const cardData = subjectCards.map(card => ({
+    el: card,
+    titleEl: card.querySelector('h3'),
+    descEl:  card.querySelector('p'),
+    origTitle: card.querySelector('h3')?.innerHTML || '',
+    origDesc:  card.querySelector('p')?.innerHTML  || '',
+    keywords:  [
+      card.querySelector('h3')?.textContent || '',
+      card.querySelector('p')?.textContent  || '',
+      card.dataset.keywords || ''
+    ].join(' ').toLowerCase()
+  }));
+
+  function highlight(text, query) {
+    if (!query) return text;
+    const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return text.replace(new RegExp(`(${escaped})`, 'gi'),
+      '<mark class="search-highlight">$1</mark>');
+  }
+
+  function doSearch(raw) {
+    const q = raw.trim().toLowerCase();
+    let visible = 0;
+
+    cardData.forEach(({ el, titleEl, descEl, origTitle, origDesc, keywords }) => {
+      if (!q || keywords.includes(q)) {
+        el.classList.remove('search-hidden');
+        if (titleEl) titleEl.innerHTML = q ? highlight(origTitle, raw.trim()) : origTitle;
+        if (descEl)  descEl.innerHTML  = q ? highlight(origDesc,  raw.trim()) : origDesc;
+        visible++;
+      } else {
+        el.classList.add('search-hidden');
+        if (titleEl) titleEl.innerHTML = origTitle;
+        if (descEl)  descEl.innerHTML  = origDesc;
+      }
+    });
+
+    clearBtn.classList.toggle('visible', q.length > 0);
+    if (noResults) noResults.style.display = visible === 0 ? 'block' : 'none';
+  }
+
+  searchInput.addEventListener('input', e => doSearch(e.target.value));
+
+  clearBtn.addEventListener('click', () => {
+    searchInput.value = '';
+    doSearch('');
+    searchInput.focus();
+  });
+
+  // Keyboard shortcut: / opens search
+  document.addEventListener('keydown', e => {
+    if (e.key === '/' && document.activeElement !== searchInput) {
+      e.preventDefault();
+      searchInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      searchInput.focus();
+    }
+  });
+})();
