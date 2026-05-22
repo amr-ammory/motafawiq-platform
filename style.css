@@ -204,6 +204,8 @@ img { max-width: 100%; }
   box-shadow: 0 6px 30px rgba(245,166,35,0.55);
   transition: all 0.3s;
   border: none; cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 45px rgba(245,166,35,0.7); }
 .btn-primary:active { transform: translateY(0); }
@@ -215,6 +217,8 @@ img { max-width: 100%; }
   color: var(--text); font-weight: 600; font-size: 0.95rem;
   border-radius: 14px;
   transition: all 0.3s;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 .btn-secondary:hover { background: rgba(245,166,35,0.15); border-color: var(--gold); color: var(--gold); }
 .btn-large { padding: 16px 40px; font-size: 1.05rem; border-radius: 16px; }
@@ -530,15 +534,30 @@ mark.search-highlight {
 /* ===== SUBJECT CARD TEXT ===== */
 .subject-card h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 10px; }
 .subject-card p { color: var(--text-muted); font-size: 0.9rem; line-height: 1.7; margin-bottom: 24px; }
+
+/* ===== SUBJECT BTN — base ===== */
 .subject-btn {
-  display: inline-flex; align-items: center; gap: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   padding: 12px 22px;
   background: linear-gradient(135deg, var(--gold), var(--orange));
-  color: #000; font-weight: 700; font-size: 0.88rem;
-  border-radius: 12px; transition: all 0.25s;
+  color: #000;
+  font-weight: 700;
+  font-size: 0.88rem;
+  border-radius: 12px;
+  transition: all 0.25s;
   box-shadow: 0 4px 18px rgba(245,166,35,0.4);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  position: relative;
+  z-index: 2;
 }
 .subject-btn:hover { transform: scale(1.04); box-shadow: 0 8px 30px rgba(245,166,35,0.6); }
+.subject-btn:active { transform: scale(0.97); opacity: 0.85; }
 
 /* ===== TESTIMONIALS ===== */
 .testimonials-section { padding: 100px 0; text-align: center; background: #0c0a00; }
@@ -636,7 +655,16 @@ mark.search-highlight {
   .subj-svg { width: 42px; height: 42px; }
   .subject-card h3 { font-size: 0.75rem; font-weight: 700; margin-bottom: 6px; text-align: center; }
   .subject-card p { display: none; }
-  .subject-btn { width: 100%; justify-content: center; padding: 8px 6px; font-size: 0.7rem; border-radius: 8px; gap: 4px; }
+  .subject-btn {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    padding: 10px 6px;
+    font-size: 0.7rem;
+    border-radius: 8px;
+    gap: 4px;
+    min-height: 40px;
+  }
   .subject-btn svg { width: 12px; height: 12px; flex-shrink: 0; }
   .search-wrapper { padding: 0 10px; }
 }
