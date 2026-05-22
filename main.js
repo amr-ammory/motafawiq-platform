@@ -179,6 +179,41 @@ async function fetchSubscriberCount() {
 fetchSubscriberCount();
 setInterval(fetchSubscriberCount, 10 * 60 * 1000);
 
+/* =================================================================
+   TELEGRAM DEEP LINK — يفتح تطبيق تلغرام مباشرة على الموبايل
+   ================================================================= */
+(function () {
+  const TG_USERNAME = 'ENGENEERING7';
+  const TG_HTTPS    = 'https://t.me/' + TG_USERNAME;
+  const TG_DEEP     = 'tg://resolve?domain=' + TG_USERNAME;
+
+  function openTelegram(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    // على الموبايل: جرّب الـ deep link أولاً، بعد 1.5 ثانية افتح https كـ fallback
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    if (isMobile) {
+      const start = Date.now();
+      window.location = TG_DEEP;
+      setTimeout(function () {
+        // إذا لم يفتح التطبيق (المستخدم لا يزال في المتصفح)
+        if (Date.now() - start < 2000) {
+          window.open(TG_HTTPS, '_blank');
+        }
+      }, 1500);
+    } else {
+      window.open(TG_HTTPS, '_blank');
+    }
+  }
+
+  // ربط الحدث بكل أزرار المواد .subject-btn
+  document.querySelectorAll('.subject-btn').forEach(function (btn) {
+    btn.addEventListener('click', openTelegram);
+    btn.addEventListener('touchend', openTelegram, { passive: false });
+  });
+})();
+
 /* ===== AOS scroll reveal ===== */
 const aosEls = document.querySelectorAll('[data-aos]');
 const aosObserver = new IntersectionObserver(entries => {
