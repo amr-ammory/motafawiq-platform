@@ -186,31 +186,23 @@ setInterval(fetchSubscriberCount, 10 * 60 * 1000);
   const TG_USERNAME = 'ENGENEERING7';
   const TG_HTTPS    = 'https://t.me/' + TG_USERNAME;
   const TG_DEEP     = 'tg://resolve?domain=' + TG_USERNAME;
+  const isMobile    = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
-  function openTelegram(e) {
-    e.preventDefault();
-    e.stopPropagation();
-
-    // على الموبايل: جرّب الـ deep link أولاً، بعد 1.5 ثانية افتح https كـ fallback
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    if (isMobile) {
-      const start = Date.now();
-      window.location = TG_DEEP;
-      setTimeout(function () {
-        // إذا لم يفتح التطبيق (المستخدم لا يزال في المتصفح)
-        if (Date.now() - start < 2000) {
-          window.open(TG_HTTPS, '_blank');
-        }
-      }, 1500);
-    } else {
-      window.open(TG_HTTPS, '_blank');
-    }
-  }
-
-  // ربط الحدث بكل أزرار المواد .subject-btn
   document.querySelectorAll('.subject-btn').forEach(function (btn) {
-    btn.addEventListener('click', openTelegram);
-    btn.addEventListener('touchend', openTelegram, { passive: false });
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
+
+      if (isMobile) {
+        // حاول فتح التطبيق مباشرة
+        window.location.href = TG_DEEP;
+        // fallback بعد 1.5 ثانية إذا التطبيق ما انفتح
+        setTimeout(function () {
+          window.open(TG_HTTPS, '_blank');
+        }, 1500);
+      } else {
+        window.open(TG_HTTPS, '_blank');
+      }
+    });
   });
 })();
 
@@ -253,7 +245,6 @@ setInterval(() => goTo(current + 1), 5000);
   const noResults   = document.getElementById('noResults');
   if (!searchInput || !grid) return;
 
-  // Store original text of each card for highlight restore
   const subjectCards = Array.from(grid.querySelectorAll('.subject-card'));
   const cardData = subjectCards.map(card => ({
     el: card,
@@ -304,7 +295,6 @@ setInterval(() => goTo(current + 1), 5000);
     searchInput.focus();
   });
 
-  // Keyboard shortcut: / opens search
   document.addEventListener('keydown', e => {
     if (e.key === '/' && document.activeElement !== searchInput) {
       e.preventDefault();
