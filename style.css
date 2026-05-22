@@ -582,16 +582,114 @@ img { max-width: 100%; }
   48%,52%         { opacity: 1; }
 }
 
-/* 13 ستاتيك - متجهات تتمدد وتتقلص */
-.vec { animation: vecPulse 2.5s ease-in-out infinite; }
-.vec-up    { animation-delay: 0s; }
-.vec-down  { animation-delay: 0.6s; }
-.vec-left  { animation-delay: 1.2s; }
-.vec-right { animation-delay: 1.8s; }
-@keyframes vecPulse {
-  0%,100% { stroke-width: 2.5; opacity: 1; }
-  40%     { stroke-width: 4;   opacity: 0.5; }
-  70%     { stroke-width: 2.5; opacity: 1; }
+/* ============================================================
+   ANIMATIONS - LAST 3 SUBJECTS (13, 14, 15)
+   ============================================================ */
+
+/* ─── 13 ستاتيك – متجهات تتمدد وتتقلص بشكل موجي ─── */
+.vec-up {
+  transform-origin: 32px 27px;
+  animation: vecStretch 3s ease-in-out infinite 0s;
+}
+.vec-down {
+  transform-origin: 32px 37px;
+  animation: vecStretch 3s ease-in-out infinite 0.75s;
+}
+.vec-left {
+  transform-origin: 27px 32px;
+  animation: vecStretch 3s ease-in-out infinite 1.5s;
+}
+.vec-right {
+  transform-origin: 37px 32px;
+  animation: vecStretch 3s ease-in-out infinite 2.25s;
+}
+@keyframes vecStretch {
+  0%,100% { stroke-width: 2.5; opacity: 1;   stroke: #f5a623; }
+  30%     { stroke-width: 4.5; opacity: 0.4;  stroke: #ffcc44; }
+  55%     { stroke-width: 5;   opacity: 1;    stroke: #f5a623; }
+  80%     { stroke-width: 2.5; opacity: 0.7;  }
+}
+
+/* ─── 14 الموائع – موجة الجريان تتموج + القطرات تتساقط + السهم يتحرك ─── */
+
+/* موجة الجريان داخل الأنبوب */
+.fluid-wave {
+  stroke-dasharray: 80;
+  stroke-dashoffset: 80;
+  animation: waveFlow 2.2s ease-in-out infinite;
+}
+.fw1 { animation-delay: 0s; }
+@keyframes waveFlow {
+  0%      { stroke-dashoffset: 80;  opacity: 0; }
+  20%     { opacity: 1; }
+  60%     { stroke-dashoffset: 0;   opacity: 1; }
+  85%     { stroke-dashoffset: -40; opacity: 0.6; }
+  100%    { stroke-dashoffset: -80; opacity: 0; }
+}
+
+/* القطرات تتساقط */
+.drop {
+  animation: dropFall 2.4s ease-in infinite;
+}
+.drop1 { animation-delay: 0s;    animation-duration: 2.4s; }
+.drop2 { animation-delay: 0.8s;  animation-duration: 2.4s; }
+.drop3 { animation-delay: 1.5s;  animation-duration: 2.4s; }
+@keyframes dropFall {
+  0%      { transform: translateY(-6px); opacity: 0; ry: 1; }
+  15%     { opacity: 1; }
+  70%     { transform: translateY(4px);  opacity: 1; ry: 4.5; }
+  90%     { transform: translateY(8px);  opacity: 0; ry: 2; }
+  100%    { transform: translateY(10px); opacity: 0; }
+}
+
+/* سهم الجريان يتحرك لليسار (RTL) */
+.flow-arrow {
+  animation: arrowPulse 1.8s ease-in-out infinite;
+}
+@keyframes arrowPulse {
+  0%,100% { opacity: 1;   transform: translateX(0); }
+  40%     { opacity: 0.3; transform: translateX(-6px); }
+  70%     { opacity: 1;   transform: translateX(0); }
+}
+
+/* ─── 15 بوربوينت – شريحة تتحرك + أشرطة الرسم تنمو + نقاط التنقل تومض ─── */
+
+/* الشريحة تتأرجح برفق */
+.ppt-slide {
+  transform-origin: 32px 28px;
+  animation: slideFloat 3s ease-in-out infinite;
+}
+@keyframes slideFloat {
+  0%,100% { transform: translateY(0)    scale(1);    opacity: 1; }
+  25%     { transform: translateY(-3px) scale(1.02); opacity: 1; }
+  50%     { transform: translateY(0)    scale(1);    opacity: 0.85; }
+  75%     { transform: translateY(2px)  scale(0.99); opacity: 1; }
+}
+
+/* أشرطة الرسم تنمو للأعلى */
+.ppt-bar {
+  transform-origin: center bottom;
+  animation: barGrow 2s ease-in-out infinite;
+}
+.pb1 { animation-delay: 0s; }
+.pb2 { animation-delay: 0.4s; }
+@keyframes barGrow {
+  0%,100% { transform: scaleY(1);   opacity: 0.6; }
+  40%     { transform: scaleY(1.5); opacity: 1; }
+  70%     { transform: scaleY(0.8); opacity: 0.8; }
+}
+
+/* نقاط التنقل تومض بالتسلسل */
+.ppt-dot {
+  animation: dotFlash 2.4s ease-in-out infinite;
+}
+.pd1 { animation-delay: 0s;    fill: #f5a623; }
+.pd2 { animation-delay: 0.8s;  }
+.pd3 { animation-delay: 1.6s;  }
+@keyframes dotFlash {
+  0%,100% { opacity: 0.35; r: 2.5; }
+  30%     { opacity: 1;    r: 3.5; fill: #ffcc44; }
+  60%     { opacity: 0.5;  r: 2.5; }
 }
 
 /* ===== SUBJECT CARD TEXT ===== */
