@@ -5,16 +5,6 @@ name            = "motafawiq-tg-proxy"
 main            = "index.js"
 compatibility_date = "2024-01-01"
 
-# KV Namespace — تحتاج تنشئها أول:
-# npx wrangler kv:namespace create TG_CACHE
-# ثم احط الـ id اللي يطلع هنا
 [[kv_namespaces]]
 binding = "TG_CACHE"
-id      = "REPLACE_WITH_YOUR_KV_NAMESPACE_ID"
-
-# المتغيرات السرية — لا تحطها هنا!
-# بدلاً من ذلك نفّذ:
-# npx wrangler secret put BOT_TOKEN
-# npx wrangler secret put CHANNEL_USERNAME
-#
-# CHANNEL_USERNAME مثال:  @ENGENEERING7
+id      = "b366664e7f35400dbc99a9378494355f"
