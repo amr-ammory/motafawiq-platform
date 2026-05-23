@@ -230,6 +230,69 @@ img { max-width: 100%; }
 @keyframes pulse { 0%,100%{opacity:1;transform:scale(1);} 50%{opacity:0.5;transform:scale(1.6);} }
 .divider { opacity: 0.4; }
 
+/* ===== SCROLL INDICATOR ===== */
+.scroll-indicator {
+  width: 50px;
+  height: 50px;
+  margin: 22px auto 0;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  position: relative;
+  background: linear-gradient(180deg, rgba(245,166,35,0.13) 0%, rgba(245,166,35,0.05) 100%);
+  border: 1px solid rgba(245,166,35,0.25);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.22), 0 0 16px rgba(245,166,35,0.07);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  animation: siFloat 2s ease-in-out infinite;
+  z-index: 12;
+  cursor: pointer;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+.scroll-indicator:hover {
+  border-color: rgba(245,166,35,0.5);
+  box-shadow: 0 8px 28px rgba(0,0,0,0.28), 0 0 22px rgba(245,166,35,0.18);
+}
+.scroll-indicator::before {
+  content: '';
+  position: absolute;
+  inset: 6px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,204,68,0.18);
+  pointer-events: none;
+}
+.scroll-indicator__wheel {
+  position: absolute;
+  top: 13px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ffcc44;
+  box-shadow: 0 0 7px rgba(255,204,68,0.6);
+  animation: siWheel 2s ease-in-out infinite;
+}
+.scroll-indicator__arrow {
+  width: 11px;
+  height: 11px;
+  border-right: 2.2px solid rgba(255,204,68,0.85);
+  border-bottom: 2.2px solid rgba(255,204,68,0.85);
+  transform: rotate(45deg) translateY(2px);
+  animation: siArrow 2s ease-in-out infinite;
+}
+@keyframes siFloat {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
+}
+@keyframes siWheel {
+  0%,100% { transform: translateY(0); opacity: 0.5; }
+  40% { transform: translateY(9px); opacity: 1; }
+  65% { transform: translateY(13px); opacity: 0.1; }
+}
+@keyframes siArrow {
+  0%,100% { transform: rotate(45deg) translateY(2px); opacity: 0.75; }
+  50% { transform: rotate(45deg) translateY(6px); opacity: 1; }
+}
+
 /* ===== NUMBERS ===== */
 .numbers-section {
   padding: 80px 0;
@@ -455,7 +518,6 @@ mark.search-highlight {
   width: 64px; height: 64px;
   filter: drop-shadow(0 0 8px rgba(245,166,35,0.4));
   transition: filter 0.3s;
-  /* تفعيل hardware acceleration على iOS */
   -webkit-transform: translateZ(0);
   transform: translateZ(0);
   will-change: transform, opacity;
@@ -469,7 +531,6 @@ mark.search-highlight {
 
 /* ============================================================
    ANIMATIONS — مُصلحة لـ iOS/Safari
-   كل animation تستخدم transform و opacity فقط
    ============================================================ */
 
 /* --- Gear spin --- */
@@ -558,7 +619,7 @@ mark.search-highlight {
   100%{stroke-dashoffset:0;opacity:0.3;}
 }
 
-/* --- Wave dot — iOS FIX: transform بدل cx/cy --- */
+/* --- Wave dot --- */
 .wave-dot {
   -webkit-animation: moveDotAnim 3s ease-in-out infinite;
   animation: moveDotAnim 3s ease-in-out infinite;
@@ -668,7 +729,6 @@ mark.search-highlight {
 @-webkit-keyframes drawDim { 0%,10%{stroke-dashoffset:28;opacity:0;} 40%,75%{stroke-dashoffset:0;opacity:1;} 90%,100%{stroke-dashoffset:0;opacity:0;} }
 @keyframes drawDim { 0%,10%{stroke-dashoffset:28;opacity:0;} 40%,75%{stroke-dashoffset:0;opacity:1;} 90%,100%{stroke-dashoffset:0;opacity:0;} }
 
-/* center-dot — iOS FIX: transform بدل r --- */
 .center-dot {
   -webkit-animation: dotPulseScale 2.5s ease-in-out infinite;
   animation: dotPulseScale 2.5s ease-in-out infinite;
@@ -676,7 +736,6 @@ mark.search-highlight {
 @-webkit-keyframes dotPulseScale { 0%,100%{-webkit-transform:scale(1);transform:scale(1);opacity:1;} 50%{-webkit-transform:scale(1.75);transform:scale(1.75);opacity:0.6;} }
 @keyframes dotPulseScale { 0%,100%{transform:scale(1);opacity:1;} 50%{transform:scale(1.75);opacity:0.6;} }
 
-/* compass circle */
 .compass-circle {
   stroke-dasharray: 113;
   stroke-dashoffset: 113;
@@ -703,7 +762,6 @@ mark.search-highlight {
 @keyframes legOpenL { 0%,100%{transform:rotate(0deg);} 40%,70%{transform:rotate(10deg);} }
 @keyframes legOpenR { 0%,100%{transform:rotate(0deg);} 40%,70%{transform:rotate(-10deg);} }
 
-/* cube rotate */
 .cube-rotate {
   -webkit-transform-origin: 38px 29px;
   transform-origin: 38px 29px;
@@ -723,7 +781,6 @@ mark.search-highlight {
   75%{transform:scale(1.04) rotate(-3deg);}
 }
 
-/* edge-glow — iOS FIX: transform بدل r --- */
 .edge-glow {
   -webkit-animation: edgeFlashScale 2.5s ease-in-out infinite;
   animation: edgeFlashScale 2.5s ease-in-out infinite;
@@ -731,7 +788,6 @@ mark.search-highlight {
 @-webkit-keyframes edgeFlashScale { 0%,100%{opacity:1;-webkit-transform:scale(1);transform:scale(1);} 40%{opacity:0.2;-webkit-transform:scale(0.4);transform:scale(0.4);} 70%{opacity:1;-webkit-transform:scale(1.6);transform:scale(1.6);} }
 @keyframes edgeFlashScale { 0%,100%{opacity:1;transform:scale(1);} 40%{opacity:0.2;transform:scale(0.4);} 70%{opacity:1;transform:scale(1.6);} }
 
-/* drill bob */
 .drill-head {
   -webkit-transform-origin: 32px 13px;
   transform-origin: 32px 13px;
@@ -741,7 +797,6 @@ mark.search-highlight {
 @-webkit-keyframes drillBob { 0%,100%{-webkit-transform:translateY(0);transform:translateY(0);} 30%{-webkit-transform:translateY(4px);transform:translateY(4px);} 60%{-webkit-transform:translateY(-2px);transform:translateY(-2px);} }
 @keyframes drillBob { 0%,100%{transform:translateY(0);} 30%{transform:translateY(4px);} 60%{transform:translateY(-2px);} }
 
-/* CNC path */
 .cnc-path {
   stroke-dasharray: 60;
   stroke-dashoffset: 60;
@@ -751,7 +806,6 @@ mark.search-highlight {
 @-webkit-keyframes drawPath { 0%,5%{stroke-dashoffset:60;opacity:0;} 50%{stroke-dashoffset:0;opacity:1;} 85%{stroke-dashoffset:0;opacity:1;} 100%{stroke-dashoffset:60;opacity:0;} }
 @keyframes drawPath { 0%,5%{stroke-dashoffset:60;opacity:0;} 50%{stroke-dashoffset:0;opacity:1;} 85%{stroke-dashoffset:0;opacity:1;} 100%{stroke-dashoffset:60;opacity:0;} }
 
-/* tool-dot — iOS FIX: transform بدل cx/cy --- */
 .tool-dot {
   -webkit-animation: toolMoveAnim 3s ease-in-out infinite;
   animation: toolMoveAnim 3s ease-in-out infinite;
@@ -775,7 +829,6 @@ mark.search-highlight {
   100%{transform:translate(36px,-12px);opacity:0;}
 }
 
-/* hammer */
 .hammer-anim {
   -webkit-transform-origin: 32px 20px;
   transform-origin: 32px 20px;
@@ -835,7 +888,6 @@ mark.search-highlight {
 @-webkit-keyframes vecStretch{0%,100%{stroke-width:2.5;opacity:1;stroke:#f5a623;}30%{stroke-width:4.5;opacity:0.4;stroke:#ffcc44;}55%{stroke-width:5;opacity:1;stroke:#f5a623;}80%{stroke-width:2.5;opacity:0.7;}}
 @keyframes vecStretch{0%,100%{stroke-width:2.5;opacity:1;stroke:#f5a623;}30%{stroke-width:4.5;opacity:0.4;stroke:#ffcc44;}55%{stroke-width:5;opacity:1;stroke:#f5a623;}80%{stroke-width:2.5;opacity:0.7;}}
 
-/* fluid wave */
 .fluid-wave{
   stroke-dasharray:80;stroke-dashoffset:80;
   -webkit-animation:waveFlow 2.2s ease-in-out infinite;
@@ -845,7 +897,6 @@ mark.search-highlight {
 @-webkit-keyframes waveFlow{0%{stroke-dashoffset:80;opacity:0;}20%{opacity:1;}60%{stroke-dashoffset:0;opacity:1;}85%{stroke-dashoffset:-40;opacity:0.6;}100%{stroke-dashoffset:-80;opacity:0;}}
 @keyframes waveFlow{0%{stroke-dashoffset:80;opacity:0;}20%{opacity:1;}60%{stroke-dashoffset:0;opacity:1;}85%{stroke-dashoffset:-40;opacity:0.6;}100%{stroke-dashoffset:-80;opacity:0;}}
 
-/* drops — iOS FIX: transform بدل ry --- */
 .drop{
   -webkit-animation:dropFallAnim 2.4s ease-in infinite;
   animation:dropFallAnim 2.4s ease-in infinite;
@@ -868,7 +919,6 @@ mark.search-highlight {
   100%{transform:translateY(10px) scaleY(0.5);opacity:0;}
 }
 
-/* flow arrow */
 .flow-arrow{
   -webkit-animation:arrowPulse 1.8s ease-in-out infinite;
   animation:arrowPulse 1.8s ease-in-out infinite;
@@ -876,7 +926,6 @@ mark.search-highlight {
 @-webkit-keyframes arrowPulse{0%,100%{opacity:1;-webkit-transform:translateX(0);transform:translateX(0);}40%{opacity:0.3;-webkit-transform:translateX(-6px);transform:translateX(-6px);}70%{opacity:1;-webkit-transform:translateX(0);transform:translateX(0);}}
 @keyframes arrowPulse{0%,100%{opacity:1;transform:translateX(0);}40%{opacity:0.3;transform:translateX(-6px);}70%{opacity:1;transform:translateX(0);}}
 
-/* ppt slide */
 .ppt-slide{
   -webkit-transform-origin:32px 28px; transform-origin:32px 28px;
   -webkit-animation:slideFloat 3s ease-in-out infinite;
@@ -895,7 +944,6 @@ mark.search-highlight {
 @-webkit-keyframes barGrow{0%,100%{-webkit-transform:scaleY(1);transform:scaleY(1);opacity:0.6;}40%{-webkit-transform:scaleY(1.5);transform:scaleY(1.5);opacity:1;}70%{-webkit-transform:scaleY(0.8);transform:scaleY(0.8);opacity:0.8;}}
 @keyframes barGrow{0%,100%{transform:scaleY(1);opacity:0.6;}40%{transform:scaleY(1.5);opacity:1;}70%{transform:scaleY(0.8);opacity:0.8;}}
 
-/* ppt-dot — iOS FIX: transform بدل r --- */
 .ppt-dot{
   -webkit-animation:dotFlashScale 2.4s ease-in-out infinite;
   animation:dotFlashScale 2.4s ease-in-out infinite;
@@ -1041,6 +1089,8 @@ mark.search-highlight {
   }
   .subject-btn svg { width: 12px; height: 12px; flex-shrink: 0; }
   .search-wrapper { padding: 0 10px; }
+  .scroll-indicator { width: 44px; height: 44px; margin-top: 16px; }
+  .scroll-indicator__arrow { width: 9px; height: 9px; }
 }
 
 @media (max-width: 600px) {
