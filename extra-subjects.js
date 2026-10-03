@@ -82,10 +82,10 @@
     '</svg>';
 
   var items = [
-    { n: '16', delay: 1200, kw: 'hydraulic fluid pump piston هيدروليك', icon: hydraulic, title: 'هيدروليك', desc: 'المائع المضغوطة وقانون باسكال، المكابس والمضخات، وتصميم الدوائر الهيدروليكية مع أمثلة حلولة خطوة بخطوة.' },
+    { n: '16', delay: 1200, kw: 'hydraulic fluid pump piston هيدروليك', icon: hydraulic, title: 'هيدروليك', desc: 'الموائع المضغوطة وقانون باسكال، المكابس والمضخات، وتصميم الدوائر الهيدروليكية مع أمثلة محلولة خطوة بخطوة.' },
     { n: '17', delay: 1280, kw: 'math calculus derivative limit رياضيات 1', icon: math1, title: 'رياضيات 1', desc: 'النهايات والاشتقاق وتطبيقاته، مع شرح مبسط وحلول أسئلة من الامتحانات السابقة.' },
     { n: '18', delay: 1360, kw: 'math integral multiple series رياضيات 2', icon: math2, title: 'رياضيات 2', desc: 'التكامل المتعدد والمتسلسلات والمعادلات التفاضلية، مع أمثلة هندسية وتمارين محلولة.' },
-    { n: '19', delay: 1440, kw: 'hvac heating air conditioning refrigeration تدفئة تكييف', icon: hvac, title: 'تدفئة وتكييف', desc: 'أساسيات التدفئة والتبريد والتكييف، حساب الأحمال الحرارية ومخطط السائل الهوائي بشرح مبسط.' }
+    { n: '19', delay: 1440, kw: 'hvac heating air conditioning refrigeration تدفئة تكييف', icon: hvac, title: 'تدفئة وتكييف', desc: 'أساسيات التدفئة والتبريد والتكييف، حساب الأحمال الحرارية ومخطط الهواء الرطب بشرح مبسط.' }
   ];
 
   items.forEach(function (it) {
@@ -102,4 +102,56 @@
       '<a href="https://t.me/ENGENEERING7" target="_blank" rel="noopener" class="subject-btn">' + tg + ' اشترك الآن</a>';
     grid.appendChild(card);
   });
+})();
+
+(function () {
+  var slider = document.getElementById('testimonialsSlider');
+  if (!slider || slider.getAttribute('data-extra') === '1') return;
+  var dots = document.getElementById('sliderDots');
+  var cards = slider.querySelectorAll('.testimonial-card');
+  var last = cards.length ? cards[cards.length - 1] : null;
+
+  var data = [
+    { name: 'أحمد عبد الكريم', role: 'طالب في المنصة', text: 'منصة رائعة وريحتني كتير والله' },
+    { name: 'تسنيم خواتمي', role: 'طالبة في المنصة', text: 'شكرا كتير الله يجزيكم كل خير' },
+    { name: 'ميس شعال', role: 'طالبة في المنصة', text: 'كنت خايفة سجل بس والله روعة وحبيت كتير' },
+    { name: 'مصطفى حداد', role: 'طالب في المنصة', text: 'والله رفعت منها ٣ مواد معدل وانا كتا احلم بالمعدل' },
+    { name: 'جميل خطاط', role: 'طالب في المنصة', text: 'الله يجزيكم الخير ع تعبكم معنا' }
+  ];
+
+  data.forEach(function (t) {
+    var card = document.createElement('div');
+    card.className = 'testimonial-card';
+    var p = document.createElement('p');
+    p.className = 'testimonial-text';
+    p.textContent = t.text;
+    var author = document.createElement('div');
+    author.className = 'testimonial-author';
+    var av = document.createElement('div');
+    av.className = 'author-avatar';
+    av.textContent = t.name.charAt(0);
+    var info = document.createElement('div');
+    var s = document.createElement('strong');
+    s.textContent = t.name;
+    var sp = document.createElement('span');
+    sp.textContent = t.role;
+    info.appendChild(s);
+    info.appendChild(sp);
+    author.appendChild(av);
+    author.appendChild(info);
+    card.appendChild(p);
+    card.appendChild(author);
+    if (last && last.parentNode) {
+      last.parentNode.insertBefore(card, last.nextSibling);
+    } else {
+      slider.appendChild(card);
+    }
+    last = card;
+    if (dots) {
+      var d = document.createElement('span');
+      d.className = 'dot';
+      dots.appendChild(d);
+    }
+  });
+  slider.setAttribute('data-extra', '1');
 })();
