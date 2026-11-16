@@ -341,7 +341,7 @@ function startCarousel() {
   stopCarousel();
   const interactionActive = testimonialSlider && (testimonialSlider.matches(':hover') || testimonialSlider.contains(document.activeElement));
   if (!prefersReducedMotion && !document.hidden && !interactionActive && cards.length > 1) {
-    carouselTimer = window.setInterval(() => goTo(current + 1), 6500);
+    carouselTimer = window.setInterval(() => goTo(current + 1), 2000);
   }
 }
 testimonialSlider?.addEventListener('mouseenter', stopCarousel);
