@@ -3,11 +3,11 @@ const canvas = document.getElementById('particleCanvas');
 const ctx = canvas.getContext('2d');
 let particles = [];
 const COLORS = [
-  'rgba(245,166,35,',
-  'rgba(255,204,44,',
-  'rgba(255,220,80,',
-  'rgba(232,116,10,',
-  'rgba(255,180,30,'
+  'rgba(255,205,70,',
+  'rgba(255,224,112,',
+  'rgba(255,236,165,',
+  'rgba(218,151,29,',
+  'rgba(255,181,39,'
 ];
 
 function resize() {
@@ -69,7 +69,7 @@ function drawParticles() {
       const ld = Math.sqrt(ldx * ldx + ldy * ldy);
       if (ld < 100) {
         ctx.beginPath();
-        ctx.strokeStyle = `rgba(245,166,35,${0.1 * (1 - ld / 100)})`;
+        ctx.strokeStyle = `rgba(237,197,71,${0.11 * (1 - ld / 100)})`;
         ctx.lineWidth = 0.6;
         ctx.moveTo(p.x, p.y);
         ctx.lineTo(q.x, q.y);
@@ -229,12 +229,17 @@ const aosEls = document.querySelectorAll('[data-aos]');
 const aosObserver = new IntersectionObserver(entries => {
   entries.forEach(e => {
     if (e.isIntersecting) {
-      const delay = parseInt(e.target.dataset.aosDelay || 0);
-      setTimeout(() => e.target.classList.add('aos-animate'), delay);
+      const authoredDelay = Number.parseInt(e.target.dataset.aosDelay || '0', 10) || 0;
+      const delay = Math.min(Math.round(authoredDelay * 0.1), 160);
+      if (delay) {
+        window.setTimeout(() => e.target.classList.add('aos-animate'), delay);
+      } else {
+        e.target.classList.add('aos-animate');
+      }
       aosObserver.unobserve(e.target);
     }
   });
-}, { threshold: 0.12 });
+}, { rootMargin: '0px 0px 200px 0px', threshold: 0.04 });
 aosEls.forEach(el => aosObserver.observe(el));
 
 /* ===== TESTIMONIAL SLIDER ===== */
