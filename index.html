@@ -92,7 +92,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=motion-polish-20261116" />
+  <link rel="stylesheet" href="style.css?v=comments-formspree-20261116" />
 </head>
 <body>
 
@@ -114,6 +114,7 @@
     <a href="#subjects">المواد</a>
     <a href="#why">لماذا نحن</a>
     <a href="#testimonials">آراء الطلاب</a>
+    <a href="#share-feedback">شاركنا رأيك</a>
     <a href="https://t.me/ENGENEERING7" target="_blank" class="nav-cta">قناة التلغرام</a>
   </div>
 </nav>
@@ -770,9 +771,52 @@
       </div>
       <button class="slider-btn" id="nextBtn" type="button" aria-label="الرأي التالي">&#8249;</button>
     </div>
+    <a class="share-comment-link" href="#share-feedback">شاركنا رأيك <span aria-hidden="true">↓</span></a>
   </div>
 </section>
-  
+
+<!-- ========== STUDENT COMMENT SUBMISSION ========== -->
+<section class="student-feedback-section" id="share-feedback">
+  <div class="container">
+    <div class="student-feedback-card" data-aos="fade-up">
+      <p class="feedback-eyebrow">رأيك يهمّنا</p>
+      <h2>شاركنا <span class="text-gradient">تجربتك</span></h2>
+      <p class="feedback-intro">كلمتك تساعدنا نطوّر المنصة وتفيد زملاءك. أرسل رأيك، وسنراجعه قبل أن نقرر نشره.</p>
+
+      <div class="comment-status comment-success" data-fs-success role="status" aria-live="polite">وصل تعليقك، شكراً لمشاركتنا رأيك. سيبقى خاصاً إلى أن تتم مراجعته.</div>
+      <div class="comment-status comment-error" data-fs-error role="alert">تعذر إرسال التعليق الآن. حاول مرة أخرى بعد قليل.</div>
+
+      <form class="student-comment-form" id="studentCommentForm" action="https://formspree.io/f/moedeojp" method="POST">
+        <input type="hidden" name="_subject" value="تعليق جديد من منصة المتفوق ميكانيك">
+        <div class="comment-honeypot" aria-hidden="true">
+          <label for="studentWebsite">اترك هذا الحقل فارغاً</label>
+          <input id="studentWebsite" type="text" name="_gotcha" tabindex="-1" autocomplete="off">
+        </div>
+
+        <div class="comment-field">
+          <label for="studentName">اسم العرض <span>(اختياري)</span></label>
+          <input id="studentName" type="text" name="student_name" maxlength="48" autocomplete="name" placeholder="مثال: طالب هندسة ميكانيك" data-fs-field>
+          <span class="comment-field-error" data-fs-error="student_name"></span>
+        </div>
+
+        <div class="comment-field">
+          <label for="studentComment">تعليقك</label>
+          <textarea id="studentComment" name="comment" rows="5" minlength="4" maxlength="700" required placeholder="اكتب رأيك أو تجربتك مع المنصة…" data-fs-field></textarea>
+          <span class="comment-field-error" data-fs-error="comment"></span>
+        </div>
+
+        <label class="comment-publish-choice">
+          <input type="checkbox" name="publish_permission" value="موافق على النشر بعد المراجعة">
+          <span><strong>أوافق على إمكانية نشر تعليقي بعد مراجعته.</strong><small>موافقتك اختيارية. إذا وافقت، يمكن عرض اسمك الذي كتبته فقط؛ وإن تركت الاسم فارغاً فسيظهر التعليق باسم «طالب».</small></span>
+        </label>
+
+        <button class="btn-primary comment-submit" type="submit" data-fs-submit-btn>إرسال التعليق</button>
+        <p class="comment-privacy">يصل التعليق واسم العرض إن أدخلته إلى إدارة المنصة عبر Formspree. لا يُنشر أي تعليق تلقائياً، ولا يطلب النموذج بريدك الإلكتروني.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
 <!-- ========== TELEGRAM CTA ========== -->
 <section class="telegram-section">
   <div class="container">
@@ -819,5 +863,12 @@
 
 <script src="extra-subjects.js?v=102b30b"></script>
 <script src="main.js?v=motion-polish-20261116"></script>
+<script>
+  window.formspree = window.formspree || function () {
+    (window.formspree.q = window.formspree.q || []).push(arguments);
+  };
+  window.formspree('initForm', { formElement: '#studentCommentForm', formId: 'moedeojp' });
+</script>
+<script src="https://unpkg.com/@formspree/ajax@1" defer></script>
 </body>
 </html>
