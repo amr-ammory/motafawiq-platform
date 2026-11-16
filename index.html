@@ -92,14 +92,16 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=warmreviews1" />
+  <link rel="stylesheet" href="style.css?v=motion-polish-20261116" />
 </head>
 <body>
 
+<div class="scroll-progress" id="scrollProgress" aria-hidden="true"><span></span></div>
+
 <!-- ========== NAVBAR ========== -->
-<nav class="navbar" id="navbar">
+<nav class="navbar" id="navbar" aria-label="التنقل الرئيسي">
   <div class="nav-container">
-    <button class="hamburger" id="hamburger" aria-label="القائمة">
+    <button class="hamburger" id="hamburger" aria-label="القائمة" aria-controls="navLinks" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
     <a href="#" class="nav-logo">
@@ -760,13 +762,13 @@
       </div>
     </div>
     <div class="slider-controls">
-      <button class="slider-btn" id="prevBtn">&#8250;</button>
+      <button class="slider-btn" id="prevBtn" type="button" aria-label="الرأي السابق">&#8250;</button>
       <div class="slider-dots" id="sliderDots">
-        <span class="dot active"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
-        <span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
-        <span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        <button class="dot active" type="button" aria-label="عرض الرأي 1" aria-pressed="true"></button><button class="dot" type="button" aria-label="عرض الرأي 2" aria-pressed="false"></button><button class="dot" type="button" aria-label="عرض الرأي 3" aria-pressed="false"></button><button class="dot" type="button" aria-label="عرض الرأي 4" aria-pressed="false"></button>
+        <button class="dot" type="button" aria-label="عرض الرأي 5" aria-pressed="false"></button><button class="dot" type="button" aria-label="عرض الرأي 6" aria-pressed="false"></button><button class="dot" type="button" aria-label="عرض الرأي 7" aria-pressed="false"></button><button class="dot" type="button" aria-label="عرض الرأي 8" aria-pressed="false"></button>
+        <button class="dot" type="button" aria-label="عرض الرأي 9" aria-pressed="false"></button><button class="dot" type="button" aria-label="عرض الرأي 10" aria-pressed="false"></button><button class="dot" type="button" aria-label="عرض الرأي 11" aria-pressed="false"></button><button class="dot" type="button" aria-label="عرض الرأي 12" aria-pressed="false"></button>
       </div>
-      <button class="slider-btn" id="nextBtn">&#8249;</button>
+      <button class="slider-btn" id="nextBtn" type="button" aria-label="الرأي التالي">&#8249;</button>
     </div>
   </div>
 </section>
@@ -816,6 +818,6 @@
 </footer>
 
 <script src="extra-subjects.js?v=102b30b"></script>
-<script src="main.js?v=goldflow1"></script>
+<script src="main.js?v=motion-polish-20261116"></script>
 </body>
 </html>
