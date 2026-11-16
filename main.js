@@ -143,7 +143,7 @@ if (numSection) counterObserver.observe(numSection);
 
 const WORKER_URL = 'https://motafawiq-tg-proxy.motafawiq.workers.dev';
 
-const subCounterEl  = document.querySelector('.number-val[data-target="415"]');
+const subCounterEl  = document.querySelector('.numbers-grid .number-card:first-child .number-val');
 const heroStatEl    = document.querySelector('.hero-stats .text-gold');
 
 async function fetchSubscriberCount() {
