@@ -180,7 +180,8 @@ function animateCounter(el, targetVal) {
     el.textContent = target;
     return;
   }
-  const current  = parseInt(el.textContent) || 0;
+  const current  = el.hasAttribute('data-animate-from-zero') ? 0 : (parseInt(el.textContent) || 0);
+  el.removeAttribute('data-animate-from-zero');
   const duration = 1800;
   const start    = performance.now();
 
