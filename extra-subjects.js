@@ -99,7 +99,7 @@
       '<div class="subject-icon">' + it.icon + '</div>' +
       '<h3>' + it.title + '</h3>' +
       '<p>' + it.desc + '</p>' +
-      '<a href="https://t.me/ENGENEERING7" target="_blank" rel="noopener" class="subject-btn">' + tg + ' اشترك الآن</a>';
+      '<a href="https://t.me/ENGENEERING7" target="_blank" rel="noopener noreferrer" class="subject-btn">' + tg + ' اشترك الآن</a>';
     grid.appendChild(card);
   });
 })();

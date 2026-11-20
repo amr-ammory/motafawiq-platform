@@ -199,14 +199,17 @@ if ('IntersectionObserver' in window && numSection) {
   const counterObserver = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (e.isIntersecting) {
-        e.target.querySelectorAll('.number-val').forEach(el => animateCounter(el));
+        e.target.querySelectorAll('.number-val').forEach(el => {
+          if (el.hasAttribute('data-live-count') && !el.hasAttribute('data-live-count-ready')) return;
+          animateCounter(el);
+        });
         counterObserver.unobserve(e.target);
       }
     });
   }, { threshold: 0.4 });
   counterObserver.observe(numSection);
 } else {
-  document.querySelectorAll('.number-val').forEach(el => animateCounter(el));
+  document.querySelectorAll('.number-val:not([data-live-count])').forEach(el => animateCounter(el));
 }
 
 /* =================================================================
@@ -216,31 +219,27 @@ if ('IntersectionObserver' in window && numSection) {
 const WORKER_URL = 'https://motafawiq-tg-proxy.motafawiq.workers.dev';
 
 const subCounterEl  = document.querySelector('.numbers-grid .number-card:first-child .number-val');
-const heroStatEl    = document.querySelector('.hero-stats .text-gold');
+const heroStatEl    = document.getElementById('heroSubscriberStat');
+const subscriberSuffix = document.querySelector('.subscriber-suffix');
 
 async function fetchSubscriberCount() {
   try {
     const res  = await fetch(WORKER_URL, { cache: 'no-store' });
     if (!res.ok) throw new Error('Worker HTTP ' + res.status);
     const data = await res.json();
-    const count = data.count;
-
-    if (!count || count === 0) return;
+    const count = Number(data?.count);
+    if (!Number.isSafeInteger(count) || count < 1) throw new Error('Worker returned an invalid subscriber count');
 
     if (subCounterEl) {
-      subCounterEl.dataset.target = count;
+      subCounterEl.dataset.target = String(count);
+      subCounterEl.dataset.liveCountReady = 'true';
       animateCounter(subCounterEl, count);
     }
+    if (subscriberSuffix) subscriberSuffix.hidden = false;
 
     if (heroStatEl) {
       heroStatEl.textContent = `+${count.toLocaleString('ar-EG')} مشترك`;
     }
-
-    const ctaText = document.querySelector('.telegram-card p');
-    if (ctaText) {
-      ctaText.textContent = `القناة هي الأساس – أكثر من ${count.toLocaleString('ar-EG')} طالب هندسة ميكانيك يستفيدون يومياً من شروحاتنا وملخصاتنا.`;
-    }
-
     console.log(`[Motafawiq] Subscriber count updated: ${count} (cached: ${data.cached})`);
 
   } catch (err) {
@@ -249,52 +248,9 @@ async function fetchSubscriberCount() {
 }
 
 fetchSubscriberCount();
-setInterval(fetchSubscriberCount, 10 * 60 * 1000);
-
-/* =================================================================
-   SUBJECT CARD — كل المربع ياخد عالتلغرام
-   ================================================================= */
-(function () {
-  const TG_USERNAME = 'ENGENEERING7';
-  const TG_HTTPS    = 'https://t.me/' + TG_USERNAME;
-  const TG_DEEP     = 'tg://resolve?domain=' + TG_USERNAME;
-  const isMobile    = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-
-  function openTelegram(e) {
-    // تجاهل إذا كانت حركة scroll وليس tap حقيقي
-    if (e.type === 'touchend') {
-      const touch = e.changedTouches[0];
-      if (!touch) return;
-    }
-    e.preventDefault();
-
-    if (isMobile) {
-      window.location.href = TG_DEEP;
-      setTimeout(function () {
-        window.open(TG_HTTPS, '_blank');
-      }, 1500);
-    } else {
-      window.open(TG_HTTPS, '_blank');
-    }
-  }
-
-  document.querySelectorAll('.subject-card').forEach(function (card) {
-    // كامل المربع يشتغل كرابط
-    card.setAttribute('role', 'link');
-    card.setAttribute('tabindex', '0');
-    card.setAttribute('aria-label', (card.querySelector('h3')?.textContent || 'المادة') + ' — فتح قناة التلغرام');
-
-    card.addEventListener('click', openTelegram);
-
-    // دعم لوحة المفاتيح
-    card.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        openTelegram(e);
-      }
-    });
-  });
-})();
+window.setInterval(() => {
+  if (!document.hidden) fetchSubscriberCount();
+}, 10 * 60 * 1000);
 
 /* ===== AOS scroll reveal ===== */
 const aosEls = document.querySelectorAll('[data-aos]');
@@ -318,6 +274,18 @@ if (prefersReducedMotion || !('IntersectionObserver' in window)) {
 const cards = document.querySelectorAll('.testimonial-card');
 const dots  = document.querySelectorAll('.dot');
 let current = Math.max(0, Array.from(cards).findIndex(card => card.classList.contains('active')));
+const testimonialSlider = document.querySelector('.testimonials-slider');
+const testimonialRegion = document.querySelector('.testimonials-section');
+const carouselToggle = document.getElementById('carouselToggle');
+let carouselTimer = null;
+let carouselPausedByUser = false;
+
+cards.forEach((card, i) => {
+  card.setAttribute('role', 'group');
+  card.setAttribute('aria-roledescription', 'شريحة');
+  card.setAttribute('aria-label', `${i + 1} من ${cards.length}`);
+});
+
 function goTo(n) {
   if (!cards.length) return;
   cards[current]?.classList.remove('active');
@@ -327,30 +295,53 @@ function goTo(n) {
   cards[current].classList.add('active');
   dots[current]?.classList.add('active');
   dots[current]?.setAttribute('aria-pressed', 'true');
+  cards.forEach((card, i) => card.setAttribute('aria-hidden', String(i !== current)));
 }
-document.getElementById('nextBtn')?.addEventListener('click', () => goTo(current - 1));
-document.getElementById('prevBtn')?.addEventListener('click', () => goTo(current + 1));
+cards.forEach((card, i) => card.setAttribute('aria-hidden', String(i !== current)));
+document.getElementById('nextBtn')?.addEventListener('click', () => goTo(current + 1));
+document.getElementById('prevBtn')?.addEventListener('click', () => goTo(current - 1));
 dots.forEach((d, i) => d.addEventListener('click', () => goTo(i)));
-const testimonialSlider = document.querySelector('.testimonials-slider');
-let carouselTimer = null;
+
 function stopCarousel() {
   if (carouselTimer !== null) window.clearInterval(carouselTimer);
   carouselTimer = null;
 }
+
+function syncCarouselToggle() {
+  if (!carouselToggle) return;
+  const paused = carouselPausedByUser || prefersReducedMotion;
+  carouselToggle.setAttribute('aria-pressed', String(paused));
+  carouselToggle.disabled = prefersReducedMotion;
+  carouselToggle.textContent = prefersReducedMotion
+    ? 'التدوير متوقف لتقليل الحركة'
+    : (carouselPausedByUser ? 'تشغيل التدوير التلقائي' : 'إيقاف التدوير التلقائي');
+  if (testimonialSlider) testimonialSlider.setAttribute('aria-live', paused ? 'polite' : 'off');
+}
+
 function startCarousel() {
   stopCarousel();
-  const interactionActive = testimonialSlider && (testimonialSlider.matches(':hover') || testimonialSlider.contains(document.activeElement));
-  if (!prefersReducedMotion && !document.hidden && !interactionActive && cards.length > 1) {
+  const interactionActive = testimonialRegion && (
+    testimonialRegion.matches(':hover') ||
+    (testimonialRegion.contains(document.activeElement) && document.activeElement !== carouselToggle)
+  );
+  if (!prefersReducedMotion && !carouselPausedByUser && !document.hidden && !interactionActive && cards.length > 1) {
     carouselTimer = window.setInterval(() => goTo(current + 1), 2000);
   }
 }
-testimonialSlider?.addEventListener('mouseenter', stopCarousel);
-testimonialSlider?.addEventListener('mouseleave', startCarousel);
-testimonialSlider?.addEventListener('focusin', stopCarousel);
-testimonialSlider?.addEventListener('focusout', e => {
-  if (!testimonialSlider.contains(e.relatedTarget)) startCarousel();
+testimonialRegion?.addEventListener('pointerenter', stopCarousel);
+testimonialRegion?.addEventListener('pointerleave', startCarousel);
+testimonialRegion?.addEventListener('focusin', stopCarousel);
+testimonialRegion?.addEventListener('focusout', e => {
+  if (!testimonialRegion.contains(e.relatedTarget)) startCarousel();
 });
 document.addEventListener('visibilitychange', () => document.hidden ? stopCarousel() : startCarousel());
+carouselToggle?.addEventListener('click', () => {
+  carouselPausedByUser = !carouselPausedByUser;
+  syncCarouselToggle();
+  if (carouselPausedByUser) stopCarousel();
+  else startCarousel();
+});
+syncCarouselToggle();
 startCarousel();
 
 /* ================================================================
@@ -361,6 +352,7 @@ startCarousel();
   const clearBtn    = document.getElementById('searchClear');
   const grid        = document.querySelector('.subjects-grid');
   const noResults   = document.getElementById('noResults');
+  const searchStatus = document.getElementById('searchStatus');
   if (!searchInput || !grid) return;
 
   const subjectCards = Array.from(grid.querySelectorAll('.subject-card'));
@@ -402,7 +394,13 @@ startCarousel();
     });
 
     clearBtn.classList.toggle('visible', q.length > 0);
+    if (clearBtn) clearBtn.disabled = q.length === 0;
     if (noResults) noResults.style.display = visible === 0 ? 'block' : 'none';
+    if (searchStatus) {
+      searchStatus.textContent = q
+        ? (visible === 0 ? 'لم يتم العثور على مواد مطابقة.' : `عدد المواد المطابقة: ${visible.toLocaleString('ar-EG')}.`)
+        : `يتم عرض جميع المواد وعددها ${visible.toLocaleString('ar-EG')}.`;
+    }
   }
 
   searchInput.addEventListener('input', e => doSearch(e.target.value));
@@ -414,7 +412,9 @@ startCarousel();
   });
 
   document.addEventListener('keydown', e => {
-    if (e.key === '/' && document.activeElement !== searchInput) {
+    const target = e.target;
+    const typing = target instanceof HTMLElement && target.matches('input, textarea, select, [contenteditable="true"]');
+    if (e.key === '/' && !typing) {
       e.preventDefault();
       searchInput.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth', block: 'center' });
       searchInput.focus();
