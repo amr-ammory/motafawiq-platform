@@ -98,7 +98,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=responsive-a11y-20261120" />
+  <link rel="stylesheet" href="style.css?v=multpage-20261123" />
 </head>
 <body>
 
@@ -111,18 +111,17 @@
     <button class="hamburger" id="hamburger" aria-label="القائمة" aria-controls="navLinks" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
-    <a href="#" class="nav-logo">
+    <a href="index.html" class="nav-logo">
       <img src="motafawiq-logo.png" alt="شعار المتفوق" class="site-logo">
       <span>المتفوق</span>
     </a>
   </div>
   <div class="nav-links" id="navLinks">
-    <a href="#about">عن المنصة</a>
+    <a href="index.html#home">الرئيسية</a>
+    <a href="branches.html">فروع الهندسة</a>
+    <a href="about.html">من نحن</a>
     <a href="#subjects">المواد</a>
     <a href="#mechanics-guide">دليل الميكانيك</a>
-    <a href="#why">لماذا نحن</a>
-    <a href="#testimonials">آراء الطلاب</a>
-    <a href="#share-feedback">شاركنا رأيك</a>
     <a href="https://t.me/ENGENEERING7" target="_blank" class="nav-cta" rel="noopener noreferrer">قناة التلغرام</a>
   </div>
 </nav>
@@ -783,6 +782,29 @@
   </div>
 </section>
 
+<!-- ========== ABOUT AND ENGINEERING BRANCHES LINKS ========== -->
+<section class="why-section" aria-labelledby="explorePagesTitle">
+  <div class="container">
+    <div class="section-badge">اكتشف المنصة</div>
+    <h2 class="section-title" id="explorePagesTitle">مسارات أوسع <span class="text-gradient">للمعرفة الهندسية</span></h2>
+    <p class="section-sub">تعرّف على المنصة، ثم استكشف فروع الهندسة ومجالات دراستها وعملها.</p>
+    <div class="features-grid">
+      <a class="feature-card" href="about.html" aria-label="اقرأ صفحة من نحن عن منصة المتفوق">
+        <span class="section-badge">عن المنصة</span>
+        <h3>من نحن؟</h3>
+        <p>تعرّف على هدف منصة المتفوق وكيفية الاستفادة من فهرس المواد والموارد التعليمية.</p>
+        <span class="text-gold">اقرأ نبذة عن المنصة ←</span>
+      </a>
+      <a class="feature-card" href="branches.html" aria-label="تعرّف على فروع الهندسة السبعة ومجالات العمل">
+        <span class="section-badge">دليل التخصصات</span>
+        <h3>فروع الهندسة ومجالاتها</h3>
+        <p>دليل تعريفي لهندسة الإنتاج والطاقة والطيران والنسيج والصناعة والنووي وعلم المواد.</p>
+        <span class="text-gold">استكشف الفروع ←</span>
+      </a>
+    </div>
+  </div>
+</section>
+
 <!-- ========== TESTIMONIALS ========== -->
 <section class="testimonials-section" id="testimonials">
   <div class="container">
@@ -930,7 +952,7 @@
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
-        <a href="#" class="nav-logo">
+        <a href="index.html" class="nav-logo">
           <img src="motafawiq-logo.png" alt="شعار المتفوق" class="site-logo">
           <span>المتفوق</span>
         </a>
@@ -944,9 +966,10 @@
       </div>
       <div class="footer-links">
         <h4>روابط سريعة</h4>
+        <a href="about.html">من نحن</a>
+        <a href="branches.html">فروع الهندسة</a>
         <a href="#subjects">المواد</a>
         <a href="#mechanics-guide">دليل الميكانيك</a>
-        <a href="#why">عن المنصة</a>
         <a href="https://t.me/ENGENEERING7" target="_blank" rel="noopener noreferrer">قناة التلغرام</a>
       </div>
     </div>
