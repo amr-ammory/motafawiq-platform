@@ -1,10 +1,18 @@
 # ============================================================
 # Wrangler config — Cloudflare Worker
 # ============================================================
-name            = "motafawiq-tg-proxy"
-main            = "index.js"
+name              = "motafawiq-tg-proxy"
+main              = "index.js"
 compatibility_date = "2024-01-01"
 
 [[kv_namespaces]]
 binding = "TG_CACHE"
 id      = "b366664e7f35400dbc99a9378494355f"
+
+[[ratelimits]]
+name        = "SUBSCRIBER_RATE_LIMITER"
+namespace_id = "2026112301"
+
+[ratelimits.simple]
+limit  = 120
+period = 60

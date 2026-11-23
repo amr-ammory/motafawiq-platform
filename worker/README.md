@@ -1,62 +1,59 @@
 # Cloudflare Worker — دليل النشر خطوة بخطوة
 
 ## المتطلبات
-- حساب Cloudflare مجاني → https://dash.cloudflare.com/sign-up
-- Node.js مثبت على جهازك
+- حساب Cloudflare يملك Worker وKV Namespace المستخدمين في هذا المشروع.
+- Node.js مثبت على الجهاز.
+- Wrangler إصدار 4.36.0 أو أحدث لدعم إعداد Rate Limiting الحالي.
 
 ---
 
 ## الخطوات
 
-### 1. ثبّت Wrangler
+### 1. ثبّت Wrangler وسجّل الدخول
 ```bash
-npm install -g wrangler
+npm install -g "wrangler@^4.36.0"
 wrangler login
 ```
 
-### 2. أنشئ KV Namespace
+### 2. راجع ربط KV
+ملف `wrangler.toml` يحتوي بالفعل على معرّف KV Namespace الحالي. إذا كنت تنشر على حساب Cloudflare نفسه، اتركه كما هو. عند استخدام حساب أو مساحة KV جديدة، أنشئ مساحة جديدة ثم حدّث قيمة `id` في الملف:
+
 ```bash
-npx wrangler kv:namespace create TG_CACHE
+npx wrangler kv namespace create TG_CACHE
 ```
-انسخ الـ `id` اللي يطلع والصقه في `wrangler.toml` محل `REPLACE_WITH_YOUR_KV_NAMESPACE_ID`
 
 ### 3. أضف المتغيرات السرية
 ```bash
 npx wrangler secret put BOT_TOKEN
-# اكتب توكن البوت تبعك (من @BotFather)
+# أدخل توكن البوت من @BotFather عند الطلب؛ لا تضعه في الملفات.
 
 npx wrangler secret put CHANNEL_USERNAME
-# اكتب:  @ENGENEERING7
+# أدخل @ENGENEERING7
 ```
 
 ### 4. انشر الـ Worker
 ```bash
+cd worker
 npx wrangler deploy
 ```
-يطلع رابط مثل:
-`https://motafawiq-tg-proxy.YOUR-SUBDOMAIN.workers.dev`
 
-### 5. حدّث الـ WORKER_URL في main.js
-افتح `main.js` وغيّر السطر:
-```js
-const WORKER_URL = 'https://motafawiq-tg-proxy.YOUR-SUBDOMAIN.workers.dev';
-```
+ينبغي أن يبقى عنوان Worker المنشور مطابقاً لـ `WORKER_URL` في `main.js`. إذا تغيّر اسم النطاق، حدّث العنوان هناك أيضاً.
 
 ---
 
-## اختبر الـ Worker
-افتح في المتصفح:
-```
-https://motafawiq-tg-proxy.YOUR-SUBDOMAIN.workers.dev
-```
-لازم يطلع:
+## اختبار آمن
+افتح عنوان Worker في المتصفح بطلب GET عادي. عند النجاح يعيد JSON من الشكل:
+
 ```json
 { "count": 415, "cached": false }
 ```
 
+قد تظهر `cached: true` عند وجود قيمة حديثة في KV، أو `stale: true` إذا تعذر الوصول إلى Telegram وعُرض آخر عدد معروف من الكاش الاحتياطي. لا ترسل طلبات ضغط أو تختبر نموذج التعليقات ببيانات حقيقية.
+
 ---
 
-## ملاحظات
-- الـ Worker مجاني حتى **100,000 طلب/يوم**
-- الرقم يتحدث كل **10 دقائق** تلقائياً
-- في حالة خطأ يبقى الرقم الأخير المحفوظ ظاهر
+## السلوك والحماية
+- يحتفظ KV بالعدد حديثاً لمدة 10 دقائق، وبنسخة احتياطية لمدة تصل إلى 24 ساعة.
+- يقبل Worker طلبات GET وOPTIONS فقط، ويرفض بقية الطرق.
+- حد الطلبات مضبوط مبدئياً على 120 طلباً في الدقيقة لكل عنوان IP عبر Cloudflare Rate Limiting API. هذا الحد تقريبي ومحلي لكل موقع Cloudflare، وقد يتأثر بمشاركة عدة زوار لعنوان IP واحد؛ لا يعدّ جداراً عالمياً صارماً.
+- مهلة طلب Telegram هي 8 ثوانٍ. لا يعيد Worker تفاصيل الخطأ أو بيانات السر للمتصفح.

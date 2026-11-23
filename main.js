@@ -222,12 +222,30 @@ const WORKER_URL = 'https://motafawiq-tg-proxy.motafawiq.workers.dev';
 const subCounterEl  = document.querySelector('.numbers-grid .number-card:first-child .number-val');
 const heroStatEl    = document.getElementById('heroSubscriberStat');
 const subscriberSuffix = document.querySelector('.subscriber-suffix');
+let subscriberCountInFlight = false;
 
 async function fetchSubscriberCount() {
+  if (subscriberCountInFlight) return;
+  subscriberCountInFlight = true;
+  let timeoutId = null;
   try {
-    const res  = await fetch(WORKER_URL, { cache: 'no-store' });
-    if (!res.ok) throw new Error('Worker HTTP ' + res.status);
-    const data = await res.json();
+    const controller = typeof AbortController === 'function' ? new AbortController() : null;
+    const fetchOptions = { cache: 'no-store' };
+    if (controller) fetchOptions.signal = controller.signal;
+    const timeoutPromise = new Promise((_, reject) => {
+      timeoutId = window.setTimeout(() => {
+        if (controller) controller.abort();
+        reject(new Error('Subscriber count request timed out'));
+      }, 8000);
+    });
+    const data = await Promise.race([
+      (async () => {
+        const res = await fetch(WORKER_URL, fetchOptions);
+        if (!res.ok) throw new Error('Worker HTTP ' + res.status);
+        return res.json();
+      })(),
+      timeoutPromise
+    ]);
     const count = Number(data?.count);
     if (!Number.isSafeInteger(count) || count < 1) throw new Error('Worker returned an invalid subscriber count');
 
@@ -245,6 +263,9 @@ async function fetchSubscriberCount() {
 
   } catch (err) {
     console.warn('[Motafawiq] Could not fetch subscriber count:', err.message);
+  } finally {
+    if (timeoutId !== null) window.clearTimeout(timeoutId);
+    subscriberCountInFlight = false;
   }
 }
 
@@ -394,8 +415,10 @@ startCarousel();
       }
     });
 
-    clearBtn.classList.toggle('visible', q.length > 0);
-    if (clearBtn) clearBtn.disabled = q.length === 0;
+    if (clearBtn) {
+      clearBtn.classList.toggle('visible', q.length > 0);
+      clearBtn.disabled = q.length === 0;
+    }
     if (noResults) noResults.style.display = visible === 0 ? 'block' : 'none';
     if (searchStatus) {
       searchStatus.textContent = q
@@ -406,7 +429,7 @@ startCarousel();
 
   searchInput.addEventListener('input', e => doSearch(e.target.value));
 
-  clearBtn.addEventListener('click', () => {
+  clearBtn?.addEventListener('click', () => {
     searchInput.value = '';
     doSearch('');
     searchInput.focus();
