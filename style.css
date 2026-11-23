@@ -940,7 +940,15 @@ mark.search-highlight {
   color: var(--text-muted); transition: all 0.25s;
 }
 .social-btn:hover { border-color: var(--gold); color: var(--gold); background: rgba(245,166,35,0.12); box-shadow: 0 0 15px rgba(245,166,35,0.2); }
+.social-btn--telegram { background: #229ed9; border-color: #229ed9; color: #fff; }
+.social-btn--telegram:hover { background: #168bc2; border-color: #168bc2; color: #fff; box-shadow: 0 0 15px rgba(34,158,217,0.35); }
+.social-btn--facebook { background: #1877f2; border-color: #1877f2; color: #fff; }
+.social-btn--facebook:hover { background: #0f66d0; border-color: #0f66d0; color: #fff; box-shadow: 0 0 15px rgba(24,119,242,0.35); }
 .tg-handle { color: var(--text-muted); font-size: 0.88rem; }
+.tg-handle a { color: inherit; text-decoration: underline; text-decoration-color: rgba(217,182,111,0.45); text-underline-offset: 3px; }
+.footer-contact a { display: inline-flex; align-items: center; gap: 8px; color: var(--gold); font-size: 0.9rem; font-weight: 700; text-decoration: none; }
+.footer-contact a:hover { color: #fff; }
+.footer-contact svg { flex: 0 0 18px; }
 .footer-links h4 { font-weight: 700; margin-bottom: 20px; color: var(--text); }
 .footer-links { display: flex; flex-direction: column; }
 .footer-links a { color: var(--text-muted); font-size: 0.9rem; padding: 8px 0; border-bottom: 1px solid rgba(245,166,35,0.08); transition: color 0.2s; }
