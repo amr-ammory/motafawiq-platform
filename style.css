@@ -2106,11 +2106,7 @@ html.motion-ready [data-aos] { will-change: auto; }
 @media (hover: none), (pointer: coarse) {
   .grid-overlay,
   .hero-glow { animation: none !important; }
-  .subject-card .subj-svg,
-  .subject-card .subj-svg * { animation: none !important; }
-  .subject-card .subj-svg animate,
-  .subject-card .subj-svg animateMotion,
-  .subject-card .subj-svg animateTransform { display: none; }
+  /* Keep subject SVG motion on touch devices; reduced-motion users are handled above. */
 }
 .join-us-banner > a { min-height: 52px; }
 .footer-links > a {
