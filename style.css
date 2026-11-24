@@ -373,8 +373,14 @@ img { max-width: 100%; }
   font-size: 1.8rem; margin: 0 auto 20px;
   box-shadow: 0 8px 30px rgba(245,166,35,0.4);
   transition: transform 0.3s;
+  animation: featureIconFloat 3s ease-in-out infinite;
 }
 .feature-card:hover .feature-icon { transform: scale(1.1) rotate(5deg); }
+@keyframes featureIconFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  35% { transform: translateY(-5px) rotate(-2deg); }
+  70% { transform: translateY(-2px) rotate(2deg); }
+}
 .feature-card h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 10px; }
 .feature-card p { color: var(--text-muted); font-size: 0.9rem; line-height: 1.7; }
 
@@ -522,6 +528,21 @@ mark.search-highlight {
   transform: translateZ(0);
   will-change: transform, opacity;
 }
+/* SVG transforms need an explicit box in Safari, Firefox and some mobile browsers. */
+.subj-svg [class] {
+  transform-box: fill-box;
+  transform-origin: center;
+  will-change: transform, opacity, stroke-dashoffset;
+}
+.subj-svg .gear-group { transform-origin: 32px 32px; }
+.subj-svg .gear-a { transform-origin: 25px 25px; }
+.subj-svg .gear-b { transform-origin: 42.5px 40px; }
+.subj-svg .pencil-group { transform-origin: 33px 46px; }
+.subj-svg .compass-leg-l,
+.subj-svg .compass-leg-r { transform-origin: 32px 10px; }
+.subj-svg .cube-rotate { transform-origin: 38px 29px; }
+.subj-svg .drill-head { transform-origin: 32px 13px; }
+.subj-svg .hammer-anim { transform-origin: 32px 20px; }
 .subject-card:hover .subj-svg,
 .subject-card:focus .subj-svg {
   filter: drop-shadow(0 0 18px rgba(245,166,35,0.75));
