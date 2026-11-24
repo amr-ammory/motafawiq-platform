@@ -519,7 +519,18 @@ mark.search-highlight {
 }
 
 /* ===== SVG SUBJECT ICONS ===== */
-.subject-icon { margin-bottom: 14px; display: flex; justify-content: flex-end; }
+.subject-icon {
+  margin-bottom: 14px;
+  display: flex;
+  justify-content: flex-end;
+  animation: subjectIconFloat 3.6s ease-in-out infinite;
+}
+.subject-card:nth-child(3n + 1) .subject-icon { animation-delay: -0.8s; }
+.subject-card:nth-child(3n + 2) .subject-icon { animation-delay: -1.7s; }
+@keyframes subjectIconFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
 .subj-svg {
   width: 64px; height: 64px;
   filter: drop-shadow(0 0 8px rgba(245,166,35,0.4));
