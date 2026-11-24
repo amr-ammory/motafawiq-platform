@@ -1,7 +1,10 @@
 /* ===== PARTICLE CANVAS ===== */
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const canvas = document.getElementById('particleCanvas');
-const ctx = canvas.getContext('2d');
+const ctx = canvas ? canvas.getContext('2d') : null;
+if (!canvas || !ctx) {
+  console.warn('[Motafawiq] Particle canvas is unavailable; continuing without particles.');
+}
 let particles = [];
 let particleFrameId = null;
 let lastParticleFrame = 0;
@@ -18,8 +21,10 @@ function resize() {
   canvas.width = canvas.offsetWidth;
   canvas.height = canvas.offsetHeight;
 }
-window.addEventListener('resize', () => { resize(); initParticles(); });
-resize();
+if (canvas && ctx) {
+  window.addEventListener('resize', () => { resize(); initParticles(); });
+  resize();
+}
 
 function initParticles() {
   particles = [];
@@ -42,19 +47,19 @@ function initParticles() {
     });
   }
 }
-initParticles();
+if (canvas && ctx) initParticles();
 
 let mouseX = -1000, mouseY = -1000;
-canvas.addEventListener('mousemove', e => {
+canvas?.addEventListener('mousemove', e => {
   const r = canvas.getBoundingClientRect();
   mouseX = e.clientX - r.left;
   mouseY = e.clientY - r.top;
 });
-canvas.addEventListener('mouseleave', () => { mouseX = -1000; mouseY = -1000; });
+canvas?.addEventListener('mouseleave', () => { mouseX = -1000; mouseY = -1000; });
 
 function drawParticles(now = 0) {
   particleFrameId = null;
-  if (prefersReducedMotion || document.hidden || !heroInView) return;
+  if (!canvas || !ctx || prefersReducedMotion || document.hidden || !heroInView) return;
   if (now - lastParticleFrame < 1000 / 30) {
     particleFrameId = requestAnimationFrame(drawParticles);
     return;
@@ -104,7 +109,7 @@ function drawParticles(now = 0) {
 }
 
 function startParticleAnimation() {
-  if (!prefersReducedMotion && !document.hidden && heroInView && particleFrameId === null) {
+  if (canvas && ctx && !prefersReducedMotion && !document.hidden && heroInView && particleFrameId === null) {
     particleFrameId = requestAnimationFrame(drawParticles);
   }
 }
@@ -133,7 +138,7 @@ const navbar = document.getElementById('navbar');
 const scrollProgress = document.querySelector('#scrollProgress span');
 let scrollUpdatePending = false;
 function updateScrollUi() {
-  navbar.classList.toggle('scrolled', window.scrollY > 50);
+  navbar?.classList.toggle('scrolled', window.scrollY > 50);
   const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
   const progress = maxScroll > 0 ? Math.min(window.scrollY / maxScroll, 1) : 0;
   if (scrollProgress) scrollProgress.style.transform = `scaleX(${progress})`;
@@ -151,21 +156,21 @@ updateScrollUi();
 const hamburger = document.getElementById('hamburger');
 const navLinks = document.getElementById('navLinks');
 function setMenuOpen(open, returnFocus = false) {
-  navLinks.classList.toggle('open', open);
-  hamburger.setAttribute('aria-expanded', String(open));
-  if (returnFocus) hamburger.focus();
+  navLinks?.classList.toggle('open', open);
+  hamburger?.setAttribute('aria-expanded', String(open));
+  if (returnFocus) hamburger?.focus();
 }
-hamburger.addEventListener('click', () => {
-  setMenuOpen(!navLinks.classList.contains('open'));
+hamburger?.addEventListener('click', () => {
+  setMenuOpen(!navLinks?.classList.contains('open'));
 });
 document.querySelectorAll('.nav-links a').forEach(a => {
   a.addEventListener('click', () => setMenuOpen(false));
 });
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape' && navLinks.classList.contains('open')) setMenuOpen(false, true);
+  if (e.key === 'Escape' && navLinks?.classList.contains('open')) setMenuOpen(false, true);
 });
 document.addEventListener('pointerdown', e => {
-  if (navLinks.classList.contains('open') && !navLinks.contains(e.target) && !hamburger.contains(e.target)) {
+  if (navLinks?.classList.contains('open') && !navLinks.contains(e.target) && !hamburger?.contains(e.target)) {
     setMenuOpen(false);
   }
 });

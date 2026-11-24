@@ -1,0 +1,16 @@
+{
+  "name": "منصة المتفوق ميكانيك",
+  "short_name": "المتفوق",
+  "description": "منصة تعليمية لطلاب هندسة الميكانيك",
+  "lang": "ar",
+  "dir": "rtl",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "theme_color": "#0c0a00",
+  "background_color": "#0c0a00",
+  "icons": [
+    {"src": "assets/site-icon-64.jpg", "sizes": "64x64", "type": "image/jpeg"},
+    {"src": "assets/apple-touch-icon.jpg", "sizes": "180x180", "type": "image/jpeg"}
+  ]
+}
