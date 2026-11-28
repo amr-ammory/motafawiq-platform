@@ -705,6 +705,91 @@ mark.search-highlight {
 @-webkit-keyframes dotFlashScale{0%,100%{opacity:0.35;-webkit-transform:scale(1);}30%{opacity:1;-webkit-transform:scale(1.4);}60%{opacity:0.5;-webkit-transform:scale(1);}}
 @keyframes dotFlashScale{0%,100%{opacity:0.35;transform:scale(1);}30%{opacity:1;transform:scale(1.4);}60%{opacity:0.5;transform:scale(1);}}
 
+/* ===== TARGETED MOTION FOR FOUR MATERIAL ICONS ===== */
+.hydraulic-svg .hydraulic-fluid {
+  transform-box: fill-box;
+  transform-origin: center bottom;
+  animation: hydraulicFluidLevel 2.8s ease-in-out infinite;
+}
+.hydraulic-svg .hydraulic-fluid-right { animation-delay: -1.4s; }
+.hydraulic-svg .hydraulic-flow-line {
+  stroke-dasharray: 3 6;
+  animation: hydraulicDashFlow 0.9s linear infinite;
+}
+.hydraulic-svg .hydraulic-oil { transform-box: fill-box; transform-origin: center; }
+.hydraulic-svg .hydraulic-oil-forward { animation: hydraulicOilForward 2.8s ease-in-out infinite; }
+.hydraulic-svg .hydraulic-oil-return { animation: hydraulicOilReturn 2.8s ease-in-out infinite -1.4s; }
+@keyframes hydraulicFluidLevel {
+  0%, 100% { transform: scaleY(0.82); opacity: 0.5; }
+  50% { transform: scaleY(1.08); opacity: 0.9; }
+}
+@keyframes hydraulicDashFlow { to { stroke-dashoffset: -18; } }
+@keyframes hydraulicOilForward {
+  0%, 8% { transform: translateX(0); opacity: 0; }
+  18% { opacity: 1; }
+  78% { transform: translateX(27px); opacity: 1; }
+  92%, 100% { transform: translateX(27px); opacity: 0; }
+}
+@keyframes hydraulicOilReturn {
+  0%, 8% { transform: translateX(0); opacity: 0; }
+  18% { opacity: 1; }
+  78% { transform: translateX(-27px); opacity: 1; }
+  92%, 100% { transform: translateX(-27px); opacity: 0; }
+}
+
+.math1-svg .calculus-probe {
+  transform-box: view-box;
+  transform-origin: 0 0;
+  animation: calculusProbeTrace 3.6s ease-in-out infinite;
+}
+.math1-svg .calculus-curve { animation: calculusCurveGlow 2.8s ease-in-out infinite; }
+@keyframes calculusProbeTrace {
+  0% { transform: translate(-16px, -26px); opacity: 0.4; }
+  50% { transform: translate(0, -4px); opacity: 1; }
+  100% { transform: translate(18px, -26px); opacity: 0.4; }
+}
+@keyframes calculusCurveGlow {
+  0%, 100% { opacity: 0.72; }
+  50% { opacity: 1; }
+}
+
+.math2-svg .integral-curve {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  animation: integralCurveDraw 3.2s ease-in-out infinite;
+}
+.math2-svg .integral-progress-dot {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: integralProgress 3.2s ease-in-out infinite;
+}
+@keyframes integralCurveDraw {
+  0%, 8% { stroke-dashoffset: 100; opacity: 0.35; }
+  58%, 82% { stroke-dashoffset: 0; opacity: 1; }
+  100% { stroke-dashoffset: 100; opacity: 0.35; }
+}
+@keyframes integralProgress {
+  0%, 8% { transform: translateX(0); opacity: 0; }
+  18% { opacity: 1; }
+  78% { transform: translateX(36px); opacity: 1; }
+  100% { transform: translateX(36px); opacity: 0; }
+}
+
+.hvac-svg .hvac-rotor {
+  transform-box: view-box;
+  transform-origin: 32px 28px;
+  animation: hvacFanSpin 2.8s linear infinite;
+}
+.hvac-svg .hvac-airflow {
+  transform-box: view-box;
+  animation: hvacAirflow 1.7s ease-in-out infinite;
+}
+@keyframes hvacFanSpin { to { transform: rotate(360deg); } }
+@keyframes hvacAirflow {
+  0%, 100% { transform: translateY(-2px); opacity: 0.25; }
+  50% { transform: translateY(2px); opacity: 1; }
+}
+
 /* ===== SUBJECT CARD TEXT ===== */
 .subject-card h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 10px; }
 .subject-card p { color: var(--text-muted); font-size: 0.9rem; line-height: 1.7; margin-bottom: 24px; }
